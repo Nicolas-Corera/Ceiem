@@ -49,11 +49,11 @@
 
 ## 🎯 Demo
 
-🌐 **[Ver demo en vivo](https://nicolas-corera.github.io/Ceiem/)** *(si está disponible)*
+🌐 **[Ver demo en vivo](https://nicolas-corera.github.io/Ceiem/)** _(si está disponible)_
 
 ### Capturas de pantalla
 
-*Agrega aquí algunas capturas de las secciones principales del proyecto*
+_Agrega aquí algunas capturas de las secciones principales del proyecto_
 
 ---
 
@@ -65,39 +65,45 @@ Ceiem/
 ├── index.html              # Página principal del sitio
 │
 ├── archivos/               # Documentos oficiales y PDFs descargables
-│   ├── normativas/
-│   ├── actas/
-│   └── reportes/
+│   └── index.html
 │
 ├── calendario/             # Sistema de gestión de eventos
-│   ├── index.html
-│   └── eventos.json
+│   ├── calendar.js
+│   └── index.html
 │
-├── docs/                   # Documentación técnica y guías
-│   ├── manual-usuario.pdf
-│   └── api-docs/
+├── docs/                   # Documentación oficial y estatutos
+│   ├── 001Estatuto_CEIEM.2024-2029.pdf
+│   ├── 001Estatuto_CEIEM.2024-2030.old.pdf
+│   └── 001Estatuto_CEIEM.2024-2030.pdf
 │
-├── elecciones2025/         # Módulo electoral principal
-│   ├── index.html
-│   ├── candidatos/
-│   ├── resultados/
-│   └── padrón/
+├── elecciones2025/         # Módulo electoral completo
+│   ├── css/
+│   │   ├── candidatos.css
+│   │   └── resultados.css
+│   ├── fonts/              # Tipografías personalizadas
+│   ├── img/                # Imágenes de candidatos y recursos
+│   │   ├── assets/
+│   │   └── images/
+│   ├── js/
+│   │   ├── candidatos.js
+│   │   └── resultados.js
+│   ├── src/
+│   │   ├── admin.html      # Panel de administración
+│   │   ├── error.html      # Página de error
+│   │   ├── pje.html        # Sistema de puntajes
+│   │   ├── presidente.html # Resultados presidenciales
+│   │   ├── resultados.html # Resultados generales
+│   │   └── votar.html      # Sistema de votación
+│   ├── 404.html            # Página de error 404
+│   ├── botones.html        # Componentes de botones
+│   ├── candidatos.html     # Listado de candidatos
+│   ├── index.html          # Inicio del módulo electoral
+│   └── resultados.html     # Resultados principales
 │
-├── img/                    # Assets visuales y multimedia
-│   ├── logos/
-│   ├── banners/
-│   └── icons/
+├── img/                    # Assets visuales generales del sitio
 │
 ├── nosotros/               # Información institucional
-│   ├── index.html
-│   ├── equipo.html
-│   └── historia.html
-│
-├── css/                    # Estilos personalizados
-│   └── styles.css
-│
-├── js/                     # Scripts y funcionalidades
-│   └── main.js
+│   └── index.html
 │
 └── README.md               # Este archivo
 ```
@@ -178,7 +184,7 @@ Abre tu navegador en `http://localhost:8000` (o el puerto que use tu servidor)
 - [x] Sistema de calendario
 - [x] Sección institucional
 
-<!-- ### Próximas funcionalidades
+### Próximas funcionalidades
 
 - [ ] Sistema de autenticación para administradores
 - [ ] Dashboard de resultados en tiempo real
@@ -189,7 +195,7 @@ Abre tu navegador en `http://localhost:8000` (o el puerto que use tu servidor)
 - [ ] Panel de administración
 - [ ] Modo oscuro
 - [ ] Accesibilidad mejorada (WCAG 2.1)
-- [ ] Versión PWA (Progressive Web App) -->
+- [ ] Versión PWA (Progressive Web App)
 
 ---
 
@@ -260,6 +266,6 @@ con fines personales y comerciales bajo los términos de la licencia MIT.
 
 **⭐ Si te gustó el proyecto, no olvides darle una estrella en GitHub ⭐**
 
-Desarrollado por [Nicolás Corera](https://github.com/Nicolas-Corera)
+Hecho con ❤️ por [Nicolás Corera](https://github.com/Nicolas-Corera)
 
 </div>
