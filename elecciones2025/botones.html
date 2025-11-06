@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistema de Votación</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-blue: #0d47a1;
+        --primary-blue-light: #1976d2;
+        --secondary-blue: #5a9bff;
+        --light-blue: #a8d0ff;
+        --background-blue: #e0f0ff;
+        --lightest-blue: #f8fbff;
+        --gradient-blue: #e8f4ff;
+        --card-blue: #f0f8ff;
+        --success-green: #2e7d32;
+        --success-green-light: #4caf50;
+        --success-green-bg: #e8f5e8;
+        --active-green: #388e3c;
+        --error-red: #d32f2f;
+        --error-red-light: #f44336;
+        --error-red-bg: #ffeaea;
+        --error-red-border: #ffcdd2;
+        --white: #ffffff;
+        --text-primary: #1a365d;
+        --text-secondary: #6c757d;
+        --text-light: #666;
+        --text-dark: #1a1a1a;
+        --border-light: #e1e8ed;
+        --background-light: #f8f9fa;
+        --gradient-primary: linear-gradient(135deg, #0d47a1 0%, #1976d2 100%);
+        --gradient-primary-reverse: linear-gradient(
+          135deg,
+          #1976d2 0%,
+          #0d47a1 100%
+        );
+        --gradient-background: linear-gradient(
+          135deg,
+          #f8fbff 0%,
+          #e8f4ff 100%
+        );
+        --gradient-card: linear-gradient(135deg, #ffffff 0%, #f0f8ff 100%);
+        --gradient-auth: linear-gradient(135deg, #e8f2ff 0%, #ffffff 100%);
+        --gradient-auth-logo: linear-gradient(135deg, #4285f4, #1976d2);
+        --gradient-auth-btn: linear-gradient(135deg, #4285f4, #1976d2);
+        --gradient-selected: linear-gradient(135deg, #a8d0ff 0%, #e0f0ff 100%);
+        --gradient-success: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+        --gradient-success-reverse: linear-gradient(
+          135deg,
+          #4caf50 0%,
+          #2e7d32 100%
+        );
+        --gradient-error: linear-gradient(135deg, #d32f2f 0%, #f44336 100%);
+        --gradient-error-reverse: linear-gradient(
+          135deg,
+          #f44336 0%,
+          #d32f2f 100%
+        );
+        --gradient-result-1: linear-gradient(90deg, #5a9bff 0%, #1976d2 100%);
+        --gradient-result-2: linear-gradient(90deg, #42a5f5 0%, #0d47a1 100%);
+        --gradient-result-3: linear-gradient(90deg, #64b5f6 0%, #1565c0 100%);
+        --gradient-result-4: linear-gradient(90deg, #90caf9 0%, #1976d2 100%);
+        --gradient-result-bar: linear-gradient(90deg, #5a9bff 0%, #0d47a1 100%);
+        --font-family: "Montserrat", -apple-system, BlinkMacSystemFont,
+          "Segoe UI", Roboto, sans-serif;
+        --font-size-xs: 0.8rem;
+        --font-size-sm: 0.9rem;
+        --font-size-base: 1rem;
+        --font-size-lg: 1.1rem;
+        --font-size-xl: 1.2rem;
+        --font-size-2xl: 1.5rem;
+        --font-size-3xl: 1.8rem;
+        --font-size-4xl: 2rem;
+        --font-size-5xl: 2.5rem;
+        --line-height: 1.6;
+        --font-weight-normal: 400;
+        --font-weight-medium: 500;
+        --font-weight-semibold: 600;
+        --font-weight-bold: 700;
+        --spacing-xs: 4px;
+        --spacing-sm: 8px;
+        --spacing-md: 12px;
+        --spacing-lg: 15px;
+        --spacing-xl: 20px;
+        --spacing-2xl: 30px;
+        --spacing-3xl: 40px;
+        --border-width: 1px;
+        --border-width-thick: 2px;
+        --border-radius-sm: 8px;
+        --border-radius-md: 10px;
+        --border-radius-lg: 12px;
+        --border-radius-xl: 16px;
+        --border-radius-2xl: 20px;
+        --border-radius-3xl: 24px;
+        --border-radius-round: 50%;
+        --btn-gradient: linear-gradient(135deg, #0d47a1 0%, #1976d2 100%);
+        --btn-gradient-hover: linear-gradient(135deg, #1976d2 0%, #0d47a1 100%);
+        --btn-auth-gradient: linear-gradient(135deg, #4285f4, #1976d2);
+        --shadow-sm: 0 2px 4px rgba(13, 71, 161, 0.1);
+        --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 4px 16px rgba(13, 71, 161, 0.08);
+        --shadow-xl: 0 8px 24px rgba(13, 71, 161, 0.12);
+        --shadow-2xl: 0 8px 32px rgba(13, 71, 161, 0.08);
+        --shadow-3xl: 0 12px 40px rgba(13, 71, 161, 0.12);
+        --shadow-button: 0 4px 16px rgba(13, 71, 161, 0.3);
+        --shadow-button-hover: 0 8px 24px rgba(13, 71, 161, 0.4);
+        --shadow-auth: 0 10px 40px rgba(0, 0, 0, 0.1);
+        --shadow-focus: 0 0 0 3px rgba(90, 155, 255, 0.1);
+        --shadow-focus-auth: 0 0 0 3px rgba(66, 133, 244, 0.1);
+        --shadow-success: 0 4px 16px rgba(46, 125, 50, 0.3);
+        --shadow-error: 0 4px 16px rgba(211, 47, 47, 0.3);
+        --shadow-selected: 0 8px 24px rgba(90, 155, 255, 0.2);
+        --shadow-message: 0 4px 16px rgba(0, 0, 0, 0.2);
+        --transition-fast: 0.2s ease;
+        --transition-normal: 0.3s ease;
+        --transition-slow: 0.8s ease;
+        --container-max-width: 1200px;
+        --pin-size: 60px;
+        --auth-logo-size: 80px;
+        --result-bar-height: 12px;
+        --voters-list-max-height: 200px;
+        --voting-card-max-height: 230px;
+        --voting-options-max-height: 480px;
+        --z-overlay: 9999;
+        --z-message: 9999;
+        --breakpoint-mobile: 480px;
+        --breakpoint-tablet: 768px;
+        --breakpoint-desktop: 1366px;
+        --breakpoint-desktop-height: 768px;
+        --auth-text: #1a1a1a;
+        --auth-subtitle: #666;
+        --auth-input-bg: #f8f9fa;
+        --auth-border: #e1e8ed;
+        --auth-focus: #4285f4;
+        --auth-focus-bg: rgba(66, 133, 244, 0.1);
+        --auth-pin-bg: #f0f7ff;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: var(--font-family);
+        background: var(--gradient-background);
+        color: var(--text-primary);
+        line-height: var(--line-height);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: var(--spacing-xl);
+      }
+      .auth-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--bg-auth);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
+      .auth-modal {
+        background: var(--bg-white);
+        padding: 3rem 2.5rem;
+        border-radius: 24px;
+        box-shadow: var(--shadow-auth);
+        max-width: 630px;
+        width: 90%;
+        text-align: center;
+        border: 1px solid var(--primary-lightest);
+      }
+      .auth-logo {
+        width: 80px;
+        height: 80px;
+        background: var(--btn-auth-gradient);
+        border-radius: 50%;
+        margin: 0 auto 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        color: var(--bg-white);
+        font-weight: bold;
+        position: relative;
+      }
+      .auth-logo::before {
+        content: "🔐";
+        font-size: 28px;
+      }
+      .auth-modal h2 {
+        margin-bottom: 0.5rem;
+        color: var(--auth-text);
+        font-size: 1.8rem;
+        font-weight: 600;
+      }
+      .auth-subtitle {
+        color: var(--auth-subtitle);
+        font-size: 0.9rem;
+        margin-bottom: 2rem;
+      }
+      .pin-container {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 1.5rem;
+      }
+      .pin-input {
+        width: 60px;
+        height: 60px;
+        border: 2px solid var(--auth-border);
+        border-radius: 12px;
+        font-size: 1.5rem;
+        font-weight: 600;
+        text-align: center;
+        background-color: var(--auth-input-bg);
+        transition: all 0.3s ease;
+        outline: none;
+      }
+      .pin-input:focus {
+        border-color: var(--auth-focus);
+        background-color: var(--bg-white);
+        box-shadow: 0 0 0 3px var(--auth-focus-bg);
+      }
+      .pin-input.filled {
+        border-color: var(--auth-focus);
+        background-color: var(--auth-pin-bg);
+      }
+      .auth-input {
+        width: 100%;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        border: 2px solid var(--auth-border);
+        border-radius: 12px;
+        font-size: 1rem;
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+        background-color: var(--auth-input-bg);
+        display: none;
+      }
+      .auth-input:focus {
+        outline: none;
+        border-color: var(--auth-focus);
+        background-color: var(--bg-white);
+        box-shadow: 0 0 0 3px var(--auth-focus-bg);
+      }
+      .auth-btn {
+        background: var(--btn-auth-gradient);
+        color: var(--bg-white);
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        width: 100%;
+        transition: all 0.3s ease;
+        box-shadow: var(--shadow-auth-btn);
+      }
+      .auth-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-auth-btn-hover);
+      }
+      .auth-btn:active {
+        transform: translateY(0);
+      }
+      .auth-error {
+        color: var(--error);
+        margin-top: 1rem;
+        font-size: 0.9rem;
+        background-color: var(--error-bg);
+        border: 1px solid var(--error-border);
+        padding: 0.5rem;
+        border-radius: 8px;
+      }
+      .main-content-auth {
+        display: none;
+      }
+      .main-content-auth.authenticated {
+        display: block;
+      }
+      .container {
+        max-width: var(--container-max-width);
+        width: 100%;
+        text-align: center;
+      }
+      .header {
+        margin-bottom: var(--spacing-3xl);
+      }
+      .title {
+        font-size: var(--font-size-5xl);
+        font-weight: var(--font-weight-bold);
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        margin-bottom: var(--spacing-lg);
+      }
+      .subtitle {
+        font-size: var(--font-size-xl);
+        color: var(--text-secondary);
+        font-weight: var(--font-weight-medium);
+      }
+      .dashboard {
+        display: flex;
+        gap: var(--spacing-2xl);
+        margin-bottom: var(--spacing-3xl);
+      }
+      .section {
+        background: var(--gradient-card);
+        padding: var(--spacing-2xl);
+        border-radius: var(--border-radius-xl);
+        box-shadow: var(--shadow-lg);
+        border: var(--border-width) solid var(--border-light);
+        transition: all var(--transition-normal);
+      }
+      .section:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-xl);
+      }
+      .section-title {
+        font-size: var(--font-size-2xl);
+        font-weight: var(--font-weight-bold);
+        margin-bottom: var(--spacing-xl);
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .section-icon {
+        font-size: var(--font-size-3xl);
+      }
+      .mesa-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-xl);
+      }
+      .mesa-btn {
+        background: var(--gradient-primary);
+        color: var(--white);
+        border: none;
+        padding: var(--spacing-lg) var(--spacing-sm);
+        border-radius: var(--border-radius-md);
+        font-size: var(--font-size-base);
+        font-weight: var(--font-weight-semibold);
+        cursor: pointer;
+        transition: all var(--transition-fast);
+        box-shadow: var(--shadow-button);
+        text-decoration: none;
+        display: block;
+        font-family: var(--font-family);
+      }
+      .mesa-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-button-hover);
+        background: var(--gradient-primary-reverse);
+      }
+      .mesa-btn:active {
+        transform: translateY(0);
+      }
+      .results-btn {
+        background: var(--gradient-success);
+        color: var(--white);
+        border: none;
+        padding: var(--spacing-xl) var(--spacing-2xl);
+        border-radius: var(--border-radius-lg);
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-bold);
+        cursor: pointer;
+        transition: all var(--transition-fast);
+        box-shadow: var(--shadow-success);
+        text-decoration: none;
+        display: inline-block;
+        font-family: var(--font-family);
+        margin-top: var(--spacing-xl);
+      }
+      .results-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-xl);
+        background: var(--gradient-success-reverse);
+      }
+      .results-btn:active {
+        transform: translateY(0);
+      }
+      .status-bar {
+        background: var(--gradient-card);
+        padding: var(--spacing-lg);
+        border-radius: var(--border-radius-md);
+        margin-bottom: var(--spacing-xl);
+        font-size: var(--font-size-sm);
+        color: var(--text-secondary);
+      }
+      .status-item {
+        display: inline-block;
+        margin: 0 var(--spacing-lg);
+        padding: var(--spacing-sm) var(--spacing-md);
+        background: var(--background-light);
+        border-radius: var(--border-radius-sm);
+      }
+      .footer {
+        margin-top: var(--spacing-3xl);
+        padding-top: var(--spacing-2xl);
+        border-top: var(--border-width) solid var(--border-light);
+        color: var(--text-secondary);
+        font-size: var(--font-size-sm);
+      }
+      .footer a {
+        color: inherit;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+      .footer a:hover {
+        color: var(--primary-blue);
+        font-weight: bold;
+      }
+      @media (max-width: 768px) {
+        .dashboard {
+          grid-template-columns: 1fr;
+        }
+        .title {
+          font-size: var(--font-size-4xl);
+        }
+        .mesa-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .section {
+          padding: var(--spacing-xl);
+        }
+      }
+      @media (max-width: 480px) {
+        .title {
+          font-size: var(--font-size-3xl);
+        }
+        .mesa-grid {
+          grid-template-columns: 1fr;
+        }
+        .mesa-btn {
+          padding: var(--spacing-xl);
+        }
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .container {
+        animation: fadeIn 0.8s ease-out;
+      }
+      .section {
+        animation: fadeIn 0.8s ease-out;
+      }
+      .section:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .section:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .section:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="authOverlay" class="auth-overlay">
+      <div class="auth-modal">
+        <div class="auth-logo"></div>
+        <h2>Acceso Administrativo</h2>
+        <p class="auth-subtitle">Ingrese el PIN de 6 dígitos para continuar</p>
+        <div class="pin-container">
+          <input
+            type="password"
+            class="pin-input"
+            maxlength="1"
+            data-index="0"
+          />
+          <input
+            type="password"
+            class="pin-input"
+            maxlength="1"
+            data-index="1"
+          />
+          <input
+            type="password"
+            class="pin-input"
+            maxlength="1"
+            data-index="2"
+          />
+          <input
+            type="password"
+            class="pin-input"
+            maxlength="1"
+            data-index="3"
+          />
+          <input
+            type="password"
+            class="pin-input"
+            maxlength="1"
+            data-index="4"
+          />
+          <input
+            type="password"
+            class="pin-input"
+            maxlength="1"
+            data-index="5"
+          />
+        </div>
+        <button id="loginBtn" class="auth-btn">Verificar & Continuar</button>
+        <div id="authError" class="auth-error" style="display: none"></div>
+      </div>
+    </div>
+    <div class="main-content-auth" id="mainContent">
+      <div class="container">
+        <div class="header">
+          <h1 class="title">🗳️ Sistema de Votación</h1>
+          <p class="subtitle">Acceso General</p>
+        </div>
+        <div class="status-bar">
+          <div class="status-item">
+            <strong>Mesas:</strong> 2 Mesas Disponibles
+          </div>
+          <div class="status-item">
+            <strong>Hora actual:</strong> <span id="current-time"></span>
+          </div>
+        </div>
+        <div class="dashboard">
+          <div class="section">
+            <h2 class="section-title">
+              <span class="section-icon">👨‍⚖️</span>
+              Mesas de Presidentes
+            </h2>
+            <div class="mesa-grid">
+              <a
+                href="src/presidente.html?mesa=1"
+                target="_blank"
+                class="mesa-btn"
+                >Mesa 1</a
+              >
+              <a
+                href="src/presidente.html?mesa=2"
+                target="_blank"
+                class="mesa-btn"
+                >Mesa 2</a
+              >
+            </div>
+            <p
+              style="
+                font-size: var(--font-size-sm);
+                color: var(--text-secondary);
+              "
+            >
+              Acceso para presidentes de mesa y supervisores
+            </p>
+          </div>
+          <div class="section">
+            <h2 class="section-title">
+              <span class="section-icon">👥</span>
+              Mesas de Votación
+            </h2>
+            <div class="mesa-grid">
+              <a href="src/votar.html?mesa=1" target="_blank" class="mesa-btn"
+                >Mesa 1</a
+              >
+              <a href="src/votar.html?mesa=2" target="_blank" class="mesa-btn"
+                >Mesa 2</a
+              >
+            </div>
+            <p
+              style="
+                font-size: var(--font-size-sm);
+                color: var(--text-secondary);
+              "
+            >
+              Acceso para votantes registrados
+            </p>
+          </div>
+          <div class="section">
+            <h2 class="section-title">
+              <span class="section-icon">📊</span>
+              Centro de Resultados
+            </h2>
+            <p
+              style="
+                margin-bottom: var(--spacing-xl);
+                color: var(--text-secondary);
+              "
+            >
+              Visualización en tiempo real de los resultados de todas las mesas
+            </p>
+            <a href="src/resultados.html" target="_blank" class="results-btn">
+              📈 Ver Resultados
+            </a>
+          </div>
+        </div>
+        <div class="footer">
+          <p>
+            Sistema de Votación Electrónica v1.0 | Todos los derechos reservados
+          </p>
+          <p>
+            Diseñado y desarrollado por
+            <a href="https://instagram.com/nicocorera" target="_blank"
+              >Nicolás Corera</a
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+    <script>
+      function updateCurrentTime() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString("es-ES", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        });
+        document.getElementById("current-time").textContent = timeString;
+      }
+      updateCurrentTime();
+      setInterval(updateCurrentTime, 1000);
+      document.querySelectorAll(".mesa-btn, .results-btn").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          this.style.transform = "scale(0.95)";
+          setTimeout(() => {
+            this.style.transform = "";
+          }, 100);
+        });
+      });
+    </script>
+    <script>
+      const AUTH_PIN = "110805"; // PIN de 6 dígitos
+      const AUTH_KEY = "voting_admin_auth";
+
+      class AuthSystem {
+        constructor() {
+          this.currentPin = "";
+          this.init();
+        }
+
+        init() {
+          if (this.isAuthenticated()) {
+            this.showMainContent();
+          } else {
+            this.showAuthModal();
+          }
+
+          const pinInputs = document.querySelectorAll(".pin-input");
+          pinInputs.forEach((input, index) => {
+            input.addEventListener("input", (e) =>
+              this.handlePinInput(e, index)
+            );
+            input.addEventListener("keydown", (e) =>
+              this.handleKeydown(e, index)
+            );
+            input.addEventListener("paste", (e) => this.handlePaste(e));
+          });
+
+          document
+            .getElementById("loginBtn")
+            .addEventListener("click", () => this.login());
+
+          window.addEventListener("beforeunload", () => {
+            sessionStorage.removeItem(AUTH_KEY);
+          });
+        }
+
+        handlePinInput(e, index) {
+          const input = e.target;
+          const value = input.value;
+
+          if (value.length === 1 && /^\d$/.test(value)) {
+            input.classList.add("filled");
+            this.updatePin();
+            if (index < 5) {
+              const nextInput = document.querySelector(
+                `[data-index="${index + 1}"]`
+              );
+              nextInput.focus();
+            } else {
+              setTimeout(() => this.login(), 100);
+            }
+          } else {
+            input.value = "";
+            input.classList.remove("filled");
+            this.updatePin();
+          }
+        }
+
+        handleKeydown(e, index) {
+          const input = e.target;
+          if (e.key === "Backspace" && input.value === "" && index > 0) {
+            const prevInput = document.querySelector(
+              `[data-index="${index - 1}"]`
+            );
+            prevInput.focus();
+            prevInput.value = "";
+            prevInput.classList.remove("filled");
+            this.updatePin();
+          } else if (e.key === "ArrowLeft" && index > 0) {
+            const prevInput = document.querySelector(
+              `[data-index="${index - 1}"]`
+            );
+            prevInput.focus();
+          } else if (e.key === "ArrowRight" && index < 5) {
+            const nextInput = document.querySelector(
+              `[data-index="${index + 1}"]`
+            );
+            nextInput.focus();
+          } else if (e.key === "Enter") {
+            this.login();
+          }
+        }
+
+        handlePaste(e) {
+          e.preventDefault();
+          const paste = e.clipboardData.getData("text");
+          if (/^\d{6}$/.test(paste)) {
+            const pinInputs = document.querySelectorAll(".pin-input");
+            [...paste].forEach((digit, index) => {
+              if (index < 6) {
+                pinInputs[index].value = digit;
+                pinInputs[index].classList.add("filled");
+              }
+            });
+            this.updatePin();
+            setTimeout(() => this.login(), 100);
+          }
+        }
+
+        updatePin() {
+          const pinInputs = document.querySelectorAll(".pin-input");
+          this.currentPin = Array.from(pinInputs)
+            .map((input) => input.value)
+            .join("");
+        }
+
+        login() {
+          const errorDiv = document.getElementById("authError");
+          if (this.currentPin === AUTH_PIN) {
+            sessionStorage.setItem(AUTH_KEY, "true");
+            this.showMainContent();
+            errorDiv.style.display = "none";
+          } else {
+            errorDiv.textContent = "PIN incorrecto. Inténtelo nuevamente.";
+            errorDiv.style.display = "block";
+            this.clearPin();
+            const modal = document.querySelector(".auth-modal");
+            modal.style.animation = "shake 0.5s";
+            setTimeout(() => {
+              modal.style.animation = "";
+            }, 500);
+          }
+        }
+
+        clearPin() {
+          const pinInputs = document.querySelectorAll(".pin-input");
+          pinInputs.forEach((input) => {
+            input.value = "";
+            input.classList.remove("filled");
+          });
+          this.currentPin = "";
+          pinInputs[0].focus();
+        }
+
+        isAuthenticated() {
+          return sessionStorage.getItem(AUTH_KEY) === "true";
+        }
+
+        showMainContent() {
+          document.getElementById("authOverlay").style.display = "none";
+          document.getElementById("mainContent").classList.add("authenticated");
+        }
+
+        showAuthModal() {
+          document.getElementById("authOverlay").style.display = "flex";
+          document
+            .getElementById("mainContent")
+            .classList.remove("authenticated");
+          setTimeout(() => {
+            document.querySelector(".pin-input").focus();
+          }, 100);
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        new AuthSystem();
+      });
+
+      const style = document.createElement("style");
+      style.textContent = `
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          25% { transform: translateX(-5px); }
+          75% { transform: translateX(5px); }
+        }
+        
+        .maintenance-section {
+          background: #f8f9fa;
+          border: 1px solid #e9ecef;
+          border-radius: 8px;
+          padding: 20px;
+          margin: 20px 0;
+        }
+        
+        .maintenance-buttons {
+          display: flex;
+          gap: 15px;
+          margin: 15px 0;
+          flex-wrap: wrap;
+        }
+        
+        .maintenance-btn {
+          background: #17a2b8;
+          color: white;
+          border: none;
+          padding: 12px 20px;
+          border-radius: 5px;
+          cursor: pointer;
+          font-weight: bold;
+          transition: background 0.3s;
+        }
+        
+        .maintenance-btn:hover {
+          background: #138496;
+        }
+        
+        .maintenance-info {
+          background: #fff;
+          border: 1px solid #dee2e6;
+          border-radius: 5px;
+          padding: 15px;
+          margin-top: 15px;
+        }
+        
+        .maintenance-info ul {
+          margin: 10px 0 0 20px;
+          color: #666;
+        }
+        
+        .maintenance-info li {
+          margin: 8px 0;
+          line-height: 1.4;
+        }
+        
+        .global-voters-section {
+          background: #fff3cd;
+          border: 1px solid #ffeaa7;
+          border-radius: 8px;
+          padding: 20px;
+          margin: 20px 0;
+        }
+        
+        .btn-dni-ocupado {
+          background-color: #f39c12 !important;
+          color: white;
+          cursor: not-allowed;
+        }
+      `;
+      document.head.appendChild(style);
+    </script>
+  </body>
+</html>

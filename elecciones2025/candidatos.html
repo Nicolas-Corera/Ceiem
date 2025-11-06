@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Candidatos Electorales - CEIEM 2025</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary-blue: #0f172a;
+        --secondary-blue: #1e293b;
+        --accent-blue: #3b82f6;
+        --light-blue: #60a5fa;
+        --lighter-blue: #93c5fd;
+        --lightest-blue: #dbeafe;
+        --white: #ffffff;
+        --gray-100: #f1f5f9;
+        --gray-200: #e2e8f0;
+        --gray-300: #cbd5e1;
+        --gray-400: #94a3b8;
+        --gray-500: #64748b;
+        --gray-600: #475569;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --error: #ef4444;
+        --gradient-primary: linear-gradient(
+          135deg,
+          #0f172a 0%,
+          #1e293b 50%,
+          #334155 100%
+        );
+        --gradient-secondary: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        --gradient-accent: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        --transition-fast: all 0.15s ease-in-out;
+        --transition-normal: all 0.3s ease-in-out;
+        --transition-slow: all 0.5s ease-in-out;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: var(--gradient-primary);
+        min-height: 100vh;
+        color: var(--white);
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+            circle at 20% 80%,
+            rgba(59, 130, 246, 0.15) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(96, 165, 250, 0.15) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 40% 40%,
+            rgba(147, 197, 253, 0.1) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: -1;
+        animation: pulseGlow 8s ease-in-out infinite;
+      }
+
+      @keyframes pulseGlow {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.8;
+        }
+      }
+
+      /* Navigation */
+      nav {
+        background: rgba(15, 23, 42, 0.8);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+        padding: 1rem 0;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        transition: var(--transition-normal);
+      }
+
+      nav.scrolled {
+        background: rgba(15, 23, 42, 0.95);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 2rem;
+      }
+
+      .logo {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--white);
+        text-decoration: none;
+        transition: var(--transition-fast);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .logo:hover {
+        color: var(--light-blue);
+        transform: translateY(-1px);
+      }
+
+      .logo::before {
+        content: "🏛️";
+        font-size: 1.5rem;
+      }
+
+      .nav-buttons {
+        display: flex;
+        gap: 0.75rem;
+      }
+
+      .nav-button,
+      .back-link {
+        padding: 0.75rem 1.5rem;
+        border: 2px solid transparent;
+        border-radius: 12px;
+        background: var(--gradient-secondary);
+        color: var(--white);
+        cursor: pointer;
+        transition: var(--transition-normal);
+        font-weight: 600;
+        font-size: 0.875rem;
+        letter-spacing: 0.025em;
+        position: relative;
+        overflow: hidden;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .nav-button::before,
+      .back-link::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: var(--transition-normal);
+      }
+
+      .nav-button:hover::before,
+      .back-link:hover::before {
+        left: 100%;
+      }
+
+      .nav-button:hover,
+      .back-link:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--light-blue);
+      }
+
+      .nav-button:active,
+      .back-link:active {
+        transform: translateY(0);
+      }
+
+      /* Main Content */
+      main {
+        padding-top: 120px;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        padding-bottom: 4rem;
+        min-height: calc(100vh - 200px);
+      }
+
+      /* Page Header */
+      .page-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        animation: fadeInDown 0.6s ease-out;
+      }
+
+      .page-header h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--lighter-blue), var(--white));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.5rem;
+      }
+
+      .page-header p {
+        font-size: 1.125rem;
+        color: var(--gray-300);
+        font-weight: 500;
+      }
+
+      /* Message Box for No Candidates */
+      .message-box {
+        background: rgba(15, 23, 42, 0.7);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(59, 130, 246, 0.4);
+        border-radius: 24px;
+        padding: 4rem 2rem;
+        margin: 3rem auto;
+        max-width: 900px;
+        box-shadow: var(--shadow-xl);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        animation: fadeInUp 0.6s ease-out;
+      }
+
+      .message-box::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          45deg,
+          rgba(59, 130, 246, 0.08),
+          rgba(147, 197, 253, 0.08)
+        );
+        pointer-events: none;
+      }
+
+      .message-box .icon-container {
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+        animation: bounce 2s ease-in-out infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .message-box h2 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: var(--lighter-blue);
+        position: relative;
+        z-index: 1;
+      }
+
+      .message-box p {
+        font-size: 1.125rem;
+        color: var(--gray-300);
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .notification {
+        background: rgba(59, 130, 246, 0.15);
+        border: 1px solid rgba(59, 130, 246, 0.4);
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        border-left: 4px solid var(--accent-blue);
+        position: relative;
+        z-index: 1;
+      }
+
+      .countdown {
+        font-size: 1rem;
+        color: var(--gray-400);
+        margin-top: 1.5rem;
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      /* Search and Filter */
+      .filter-container {
+        margin-bottom: 3rem;
+        display: flex;
+        justify-content: center;
+        animation: fadeInUp 0.6s ease-out 0.2s backwards;
+      }
+
+      .search-wrapper {
+        position: relative;
+        width: 100%;
+        max-width: 500px;
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 1.25rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--gray-400);
+        pointer-events: none;
+        font-size: 1.125rem;
+        transition: var(--transition-fast);
+      }
+
+      .search-input {
+        padding: 1rem 1.25rem 1rem 3.5rem;
+        border: 2px solid rgba(59, 130, 246, 0.3);
+        border-radius: 16px;
+        font-size: 1rem;
+        width: 100%;
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(20px);
+        color: var(--white);
+        transition: var(--transition-normal);
+        box-shadow: var(--shadow-md);
+        font-weight: 500;
+      }
+
+      .search-input::placeholder {
+        color: var(--gray-400);
+      }
+
+      .search-input:focus {
+        outline: none;
+        border-color: var(--light-blue);
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+        background: rgba(15, 23, 42, 0.8);
+      }
+
+      .search-input:focus + .search-icon {
+        color: var(--light-blue);
+      }
+
+      /* Stats Bar */
+      .stats-bar {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        margin-bottom: 3rem;
+        flex-wrap: wrap;
+        animation: fadeInUp 0.6s ease-out 0.3s backwards;
+      }
+
+      .stat-item {
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        border-radius: 16px;
+        padding: 1.25rem 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        transition: var(--transition-normal);
+        box-shadow: var(--shadow-md);
+      }
+
+      .stat-item:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--light-blue);
+      }
+
+      .stat-icon {
+        font-size: 2rem;
+        color: var(--light-blue);
+      }
+
+      .stat-content h3 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--white);
+      }
+
+      .stat-content p {
+        font-size: 0.875rem;
+        color: var(--gray-400);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-weight: 600;
+      }
+
+      /* Candidates Grid */
+      .listContainer {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+        gap: 2.5rem;
+        align-items: start;
+      }
+
+      .electoral-list {
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        border-radius: 24px;
+        box-shadow: var(--shadow-xl);
+        overflow: hidden;
+        transition: var(--transition-normal);
+        position: relative;
+        animation: fadeInUp 0.6s ease-out backwards;
+      }
+
+      .electoral-list:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .electoral-list:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .electoral-list:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      .electoral-list:nth-child(4) {
+        animation-delay: 0.4s;
+      }
+
+      .electoral-list::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          45deg,
+          rgba(59, 130, 246, 0.05),
+          rgba(147, 197, 253, 0.05)
+        );
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0;
+        transition: var(--transition-normal);
+      }
+
+      .electoral-list:hover::before {
+        opacity: 1;
+      }
+
+      .electoral-list.expanded {
+        transform: translateY(-8px);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        border-color: var(--light-blue);
+      }
+
+      .electoral-list:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
+      }
+
+      .list-card {
+        display: flex;
+        padding: 2rem;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+      }
+
+      .list-image-container {
+        position: relative;
+        margin-right: 1.5rem;
+        flex-shrink: 0;
+      }
+
+      .list-image {
+        width: 140px;
+        height: 140px;
+        object-fit: cover;
+        border-radius: 20px;
+        box-shadow: var(--shadow-lg);
+        border: 3px solid rgba(59, 130, 246, 0.3);
+        transition: var(--transition-normal);
+      }
+
+      .electoral-list:hover .list-image {
+        transform: scale(1.05);
+        border-color: var(--light-blue);
+      }
+
+      .list-number {
+        position: absolute;
+        bottom: -8px;
+        right: -8px;
+        background: var(--gradient-secondary);
+        color: var(--white);
+        padding: 0.625rem 1rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        box-shadow: var(--shadow-lg);
+        border: 3px solid var(--primary-blue);
+        letter-spacing: 0.05em;
+      }
+
+      .list-info {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        z-index: 1;
+      }
+
+      .list-slogan {
+        font-style: italic;
+        color: var(--light-blue);
+        margin-bottom: 1.25rem;
+        font-size: 1.05rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      /* .list-slogan::before {
+        content: "💡";
+        font-size: 1.25rem;
+      } */
+
+      .candidates-main {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .main-candidate {
+        display: flex;
+        flex-direction: column;
+        gap: 0.375rem;
+        padding: 0.75rem;
+        background: rgba(59, 130, 246, 0.05);
+        border-radius: 12px;
+        border-left: 3px solid var(--accent-blue);
+        transition: var(--transition-fast);
+      }
+
+      .main-candidate:hover {
+        background: rgba(59, 130, 246, 0.1);
+        transform: translateX(4px);
+      }
+
+      .candidate-role {
+        font-size: 0.75rem;
+        color: var(--gray-400);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 0.375rem;
+      }
+
+      .candidate-role::before {
+        content: "👤";
+        font-size: 0.875rem;
+      }
+
+      .candidate-name {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: var(--white);
+      }
+
+      .expand-button {
+        align-self: center;
+        color: var(--white);
+        font-weight: 600;
+        font-size: 0.875rem;
+        padding: 0.875rem 1.75rem;
+        cursor: pointer;
+        border-radius: 12px;
+        background: var(--gradient-secondary);
+        transition: var(--transition-normal);
+        border: 2px solid transparent;
+        box-shadow: var(--shadow-md);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        letter-spacing: 0.025em;
+      }
+
+      .expand-button:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--light-blue);
+      }
+
+      .expand-button:active {
+        transform: translateY(0);
+      }
+
+      /* Other Candidates Section */
+      .other-candidates {
+        max-height: 0;
+        overflow: hidden;
+        padding: 0 2rem;
+        border-top: 1px solid rgba(59, 130, 246, 0.3);
+        margin-top: 0.5rem;
+        position: relative;
+        z-index: 1;
+        transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+      }
+
+      .other-candidates.show {
+        max-height: 1000px;
+        padding: 0 2rem 2rem;
+      }
+
+      .other-candidates-inner {
+        padding: 1.5rem 0;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.4s ease-out 0.1s, transform 0.4s ease-out 0.1s;
+      }
+
+      .other-candidates.show .other-candidates-inner {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .candidate-category {
+        margin-bottom: 2rem;
+      }
+
+      .candidate-category h4 {
+        margin: 0 0 1rem 0;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid var(--accent-blue);
+        color: var(--lighter-blue);
+        font-size: 1.05rem;
+        font-weight: 700;
+        letter-spacing: 0.025em;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .candidate-category ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 0.5rem;
+      }
+
+      .candidate-category li {
+        padding: 1rem 1.25rem;
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        border-radius: 12px;
+        transition: var(--transition-fast);
+        color: var(--gray-300);
+        font-weight: 500;
+        background: rgba(59, 130, 246, 0.03);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .candidate-category li i {
+        color: var(--light-blue);
+        font-size: 1rem;
+      }
+
+      .candidate-category li:hover {
+        color: var(--white);
+        background: rgba(59, 130, 246, 0.12);
+        border-color: var(--light-blue);
+        transform: translateX(8px);
+        box-shadow: var(--shadow-md);
+      }
+
+      /* Footer */
+      footer {
+        background: rgba(15, 23, 42, 0.8);
+        backdrop-filter: blur(20px);
+        border-top: 1px solid rgba(59, 130, 246, 0.2);
+        padding: 3rem 2rem 2rem;
+        margin-top: 4rem;
+      }
+
+      .footer-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        text-align: center;
+      }
+
+      .footer-title {
+        font-weight: 700;
+        font-size: 1.25rem;
+        color: var(--lighter-blue);
+      }
+
+      .footer-copyright {
+        font-size: 0.875rem;
+        color: var(--gray-400);
+      }
+
+      .footer-designer {
+        font-size: 0.875rem;
+        color: var(--gray-400);
+      }
+
+      .footer-designer a {
+        color: var(--light-blue);
+        text-decoration: none;
+        font-weight: 600;
+        transition: var(--transition-fast);
+      }
+
+      .footer-designer a:hover {
+        color: var(--lighter-blue);
+        text-decoration: underline;
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* No Results Message */
+      .no-results {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: var(--gray-400);
+        font-size: 1.125rem;
+        animation: fadeInUp 0.4s ease-out;
+      }
+
+      .no-results i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        display: block;
+        color: var(--gray-500);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1024px) {
+        .nav-container {
+          padding: 0 1.5rem;
+        }
+        main {
+          padding-left: 1.5rem;
+          padding-right: 1.5rem;
+        }
+        .listContainer {
+          grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+          gap: 2rem;
+        }
+        .page-header h1 {
+          font-size: 2rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-container {
+          flex-direction: column;
+          gap: 1rem;
+        }
+        .listContainer {
+          grid-template-columns: 1fr;
+        }
+        .list-card {
+          flex-direction: column;
+          text-align: center;
+        }
+        .list-image-container {
+          margin-right: 0;
+          margin-bottom: 1.5rem;
+        }
+        .expand-button {
+          align-self: center;
+          margin-top: 1rem;
+        }
+        main {
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+        .page-header h1 {
+          font-size: 1.75rem;
+        }
+        .stats-bar {
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .stat-item {
+          justify-content: center;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .list-image {
+          width: 120px;
+          height: 120px;
+        }
+        .nav-button,
+        .back-link {
+          font-size: 0.8rem;
+          padding: 0.625rem 1rem;
+        }
+        .list-card {
+          padding: 1.5rem;
+        }
+        .page-header h1 {
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Página cuando no hay candidatos publicados -->
+    <div id="no-candidates-page" style="display: none">
+      <nav id="navbar">
+        <div class="nav-container">
+          <a
+            href="http://elecciones.ceiem.com.ar/ceiem/elecciones2025/"
+            class="logo"
+            >E.E.S.T N°4 "ING. EMILIO MITRE"</a
+          >
+          <div class="nav-buttons">
+            <a
+              href="http://elecciones.ceiem.com.ar/ceiem/elecciones2025/"
+              class="back-link"
+            >
+              <i class="fas fa-arrow-left"></i> Volver al inicio
+            </a>
+            <button class="nav-button" onclick="navegarA('resultados')">
+              <i class="fas fa-chart-bar"></i> Resultados
+            </button>
+          </div>
+        </div>
+      </nav>
+      <main>
+        <div class="message-box">
+          <div class="icon-container">
+            <i class="fas fa-users"></i>
+          </div>
+          <h2>Candidatos aún no publicados</h2>
+          <p>
+            Los candidatos para las próximas elecciones aún no han sido
+            publicados oficialmente.
+          </p>
+          <div class="notification">
+            <p>
+              <strong>📢 Próximamente:</strong> La lista oficial de candidatos
+              será publicada en los próximos días.
+            </p>
+            <p>Por favor, permanezca atento a nuestras actualizaciones.</p>
+          </div>
+          <div class="countdown">
+            <i class="fas fa-calendar-alt"></i>
+            La publicación de candidatos se realizará siguiendo el calendario
+            electoral establecido.
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Página con los candidatos -->
+    <div id="candidates-page" style="display: block">
+      <nav id="navbar">
+        <div class="nav-container">
+          <a
+            href="http://elecciones.ceiem.com.ar/ceiem/elecciones2025/"
+            class="logo"
+            >E.E.S.T N°4 "ING. EMILIO MITRE"</a
+          >
+          <div class="nav-buttons">
+            <a
+              href="http://elecciones.ceiem.com.ar/ceiem/elecciones2025/"
+              class="back-link"
+            >
+              <i class="fas fa-arrow-left"></i> Volver al inicio
+            </a>
+            <button class="nav-button" onclick="navegarA('resultados')">
+              <i class="fas fa-chart-bar"></i> Resultados
+            </button>
+          </div>
+        </div>
+      </nav>
+      <main>
+        <div class="page-header">
+          <h1>Candidatos Electorales 2025</h1>
+          <p>Conoce a todos los candidatos participantes</p>
+        </div>
+
+        <div class="stats-bar" id="stats-bar">
+          <div class="stat-item">
+            <div class="stat-icon"><i class="fas fa-list-ol"></i></div>
+            <div class="stat-content">
+              <h3 id="total-lists">0</h3>
+              <p>Listas</p>
+            </div>
+          </div>
+          <!-- <div class="stat-item">
+            <div class="stat-icon"><i class="fas fa-users"></i></div>
+            <div class="stat-content">
+              <h3 id="total-candidates">0</h3>
+              <p>Candidatos</p>
+            </div>
+          </div> -->
+        </div>
+
+        <div class="filter-container">
+          <div class="search-wrapper">
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Buscar candidato o lista..."
+              class="search-input"
+            />
+            <i class="fas fa-search search-icon"></i>
+          </div>
+        </div>
+
+        <div class="listContainer" id="listContainer"></div>
+        <div class="no-results" id="no-results" style="display: none">
+          <i class="fas fa-search"></i>
+          <p>No se encontraron resultados para tu búsqueda</p>
+        </div>
+      </main>
+    </div>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-title">Elecciones Centro de Estudiante 2025</div>
+        <div class="footer-copyright">
+          © 2025 E.E.S.T N°4 "ING. EMILIO MITRE" - Todos los derechos reservados
+        </div>
+        <div class="footer-designer">
+          Diseñado por:
+          <a href="https://www.instagram.com/nicocorera/" target="_blank"
+            >Nicolás Corera</a
+          >
+        </div>
+      </div>
+    </footer>
+    <script>
+      const electoralLists = [
+        {
+          number: "LISTA 252",
+          color: "#0198c5",
+          image: "img/252.png",
+          slogan: "",
+          mainCandidates: {
+            president: {
+              name: "Iván Pytel",
+              role: "Presidente",
+              photo: "",
+            },
+            vicePresident: {
+              name: "Bruno Belec",
+              role: "Vicepresidente",
+              photo: "",
+            },
+          },
+          otherCandidates: {
+            "Secretaría General": ["Federico Grammática"],
+            // Tesorería: [""],
+            // Vocales: ["", "", ""],
+          },
+        },
+        {
+          number: "LISTA 203",
+          color: "#cc46fd",
+          image: "img/203.png",
+          slogan: "",
+          mainCandidates: {
+            president: {
+              name: "Tobias E. Ibiris",
+              role: "Presidente",
+              photo: "",
+            },
+            vicePresident: {
+              name: "Sebastian A. Garcia",
+              role: "Vicepresidente",
+              photo: "",
+            },
+          },
+          otherCandidates: {
+            "Secretaría General": ["Luciano A. Lunardeli"],
+            // Tesorería: [""],
+            // Vocales: [""],
+          },
+        },
+      ];
+
+      function generateMainCandidatesHTML(list) {
+        const borderStyle = `border-left: 4px solid ${list.color}`;
+        return `
+          <div class="list-card" style="${borderStyle}">
+            <div class="list-image-container">
+              <img class="list-image" src="${list.image}" alt="Imagen ${list.number}">
+              <div class="list-number">${list.number}</div>
+            </div>
+            <div class="list-info">
+              <div class="list-slogan">${list.slogan}</div>
+              <div class="candidates-main">
+                <div class="main-candidate">
+                  <div class="candidate-role">${list.mainCandidates.president.role}</div>
+                  <div class="candidate-name">${list.mainCandidates.president.name}</div>
+                </div>
+                <div class="main-candidate">
+                  <div class="candidate-role">${list.mainCandidates.vicePresident.role}</div>
+                  <div class="candidate-name">${list.mainCandidates.vicePresident.name}</div>
+                </div>
+              </div>
+              <div class="expand-button">
+                <i class="fas fa-chevron-down"></i>
+                <span>Ver lista completa</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      function generateOtherCandidatesHTML(candidates) {
+        return Object.entries(candidates)
+          .map(
+            ([category, names]) => `
+              <div class="candidate-category">
+                <h4><i class="fas fa-user-friends"></i> ${category}</h4>
+                <ul>${names
+                  .map((name) => `<li><i class="fas fa-user"></i> ${name}</li>`)
+                  .join("")}</ul>
+              </div>
+            `
+          )
+          .join("");
+      }
+
+      function updateStats() {
+        const totalLists = electoralLists.length;
+        let totalCandidates = 0;
+
+        electoralLists.forEach((list) => {
+          totalCandidates += 2; // President and Vice President
+          Object.values(list.otherCandidates).forEach((candidates) => {
+            totalCandidates += candidates.length;
+          });
+        });
+
+        document.getElementById("total-lists").textContent = totalLists;
+        // document.getElementById("total-candidates").textContent =
+        //   totalCandidates;
+      }
+
+      function generateLists() {
+        const container = document.getElementById("listContainer");
+        container.innerHTML = "";
+
+        electoralLists.forEach((list) => {
+          const listElement = document.createElement("div");
+          listElement.className = "electoral-list";
+          listElement.innerHTML = `
+            ${generateMainCandidatesHTML(list)}
+            <div class="other-candidates">
+              <div class="other-candidates-inner">
+                ${generateOtherCandidatesHTML(list.otherCandidates)}
+              </div>
+            </div>
+          `;
+
+          const expandButton = listElement.querySelector(".expand-button");
+          expandButton.addEventListener("click", function (e) {
+            e.stopPropagation();
+
+            const allLists = document.querySelectorAll(".electoral-list");
+            const isExpanding = !listElement.classList.contains("expanded");
+
+            allLists.forEach((otherList) => {
+              if (otherList !== listElement) {
+                otherList.classList.remove("expanded");
+                otherList
+                  .querySelector(".other-candidates")
+                  .classList.remove("show");
+                otherList.querySelector(".expand-button").innerHTML =
+                  '<i class="fas fa-chevron-down"></i><span>Ver lista completa</span>';
+              }
+            });
+
+            listElement.classList.toggle("expanded");
+            const otherCandidates =
+              listElement.querySelector(".other-candidates");
+            otherCandidates.classList.toggle("show");
+
+            this.innerHTML = otherCandidates.classList.contains("show")
+              ? '<i class="fas fa-chevron-up"></i><span>Ocultar lista</span>'
+              : '<i class="fas fa-chevron-down"></i><span>Ver lista completa</span>';
+
+            if (isExpanding) {
+              setTimeout(() => {
+                listElement.scrollIntoView({
+                  behavior: "smooth",
+                  block: "nearest",
+                });
+              }, 100);
+            }
+          });
+
+          container.appendChild(listElement);
+        });
+
+        updateStats();
+      }
+
+      function setupSearch() {
+        const searchInput = document.getElementById("search-input");
+        const noResults = document.getElementById("no-results");
+
+        searchInput.addEventListener("input", function () {
+          const searchTerm = this.value.toLowerCase().trim();
+          let foundCount = 0;
+
+          electoralLists.forEach((list, index) => {
+            const listElement =
+              document.querySelectorAll(".electoral-list")[index];
+            let found = false;
+
+            if (
+              list.mainCandidates.president.name
+                .toLowerCase()
+                .includes(searchTerm) ||
+              list.mainCandidates.vicePresident.name
+                .toLowerCase()
+                .includes(searchTerm) ||
+              list.number.toLowerCase().includes(searchTerm) ||
+              list.slogan.toLowerCase().includes(searchTerm)
+            ) {
+              found = true;
+            }
+
+            if (!found) {
+              Object.values(list.otherCandidates).forEach((candidates) => {
+                candidates.forEach((candidate) => {
+                  if (candidate.toLowerCase().includes(searchTerm)) {
+                    found = true;
+                  }
+                });
+              });
+            }
+
+            if (found) {
+              listElement.style.display = "block";
+              foundCount++;
+            } else {
+              listElement.style.display = "none";
+            }
+          });
+
+          noResults.style.display =
+            foundCount === 0 && searchTerm !== "" ? "block" : "none";
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        generateLists();
+        setupSearch();
+
+        document.addEventListener("click", function (event) {
+          if (!event.target.closest(".electoral-list")) {
+            const expandedLists = document.querySelectorAll(
+              ".electoral-list.expanded"
+            );
+            expandedLists.forEach((list) => {
+              list.classList.remove("expanded");
+              list.querySelector(".other-candidates").classList.remove("show");
+              list.querySelector(".expand-button").innerHTML =
+                '<i class="fas fa-chevron-down"></i><span>Ver lista completa</span>';
+            });
+          }
+        });
+      });
+
+      function navegarA(pagina) {
+        const paginas = {
+          candidatos: "candidatos.html",
+          resultados: "resultados.html",
+          botones: "botones.html",
+        };
+        window.location.href = paginas[pagina];
+      }
+
+      window.addEventListener("scroll", () => {
+        const navbar = document.getElementById("navbar");
+        if (window.scrollY > 50) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+      });
+    </script>
+  </body>
+</html>

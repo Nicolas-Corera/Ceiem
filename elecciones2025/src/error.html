@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 - Página No Encontrada</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(
+          135deg,
+          #0d47a1 0%,
+          #1976d2 50%,
+          #5a9bff 100%
+        );
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        position: relative;
+        padding-bottom: 80px;
+      }
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url("images/MITRE.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        opacity: 0.3; /* Ajusta este valor (0.1 = muy transparente, 1 = opaco) */
+        z-index: 1;
+      }
+      body > * {
+        position: relative;
+        z-index: 2;
+      }
+      @media (max-width: 768px) {
+        body {
+          padding-bottom: 70px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding-bottom: 60px;
+        }
+      }
+
+      .container {
+        text-align: center;
+        max-width: 600px;
+        padding: 40px 20px;
+      }
+
+      .error-title {
+        font-size: 120px;
+        font-weight: bold;
+        background: linear-gradient(45deg, #1976d2, #5a9bff, #a8d0ff, #e0f0ff);
+        background-size: 300% 300%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: gradientShift 3s ease infinite;
+        margin-bottom: 20px;
+        text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+      }
+
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .error-code {
+        font-size: 24px;
+        font-weight: 600;
+        color: #e8f4ff;
+        margin-bottom: 10px;
+        letter-spacing: 2px;
+      }
+
+      .error-message {
+        font-size: 18px;
+        color: #f8fbff;
+        margin-bottom: 40px;
+        line-height: 1.6;
+      }
+
+      .home-button {
+        display: inline-block;
+        padding: 15px 30px;
+        background: linear-gradient(45deg, #1976d2, #5a9bff);
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3);
+        cursor: pointer;
+      }
+
+      .home-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4);
+        background: linear-gradient(45deg, #0d47a1, #1976d2);
+      }
+
+      .decoration {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: rgba(168, 208, 255, 0.1);
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .decoration:nth-child(1) {
+        top: 10%;
+        left: 10%;
+        animation-delay: -0.5s;
+      }
+
+      .decoration:nth-child(2) {
+        top: 20%;
+        right: 10%;
+        animation-delay: -2s;
+      }
+
+      .decoration:nth-child(3) {
+        bottom: 10%;
+        left: 20%;
+        animation-delay: -3.5s;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .error-title {
+          font-size: 80px;
+        }
+
+        .error-code {
+          font-size: 20px;
+        }
+
+        .error-message {
+          font-size: 16px;
+        }
+      }
+      .footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        padding: 20px 15px;
+        color: #f8fbff;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+
+      .footer p {
+        margin: 0 0 8px 0;
+        font-weight: 500;
+      }
+
+      .footer span {
+        font-size: 13px;
+        color: #f8fbff;
+      }
+
+      .footer a {
+        color: #f8fbff;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .footer a:hover {
+        color: #94c2ff;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .footer {
+          padding: 15px 10px;
+          font-size: 12px;
+        }
+
+        .footer p {
+          margin: 0 0 5px 0;
+        }
+
+        .footer span {
+          font-size: 11px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .footer {
+          padding: 12px 8px;
+          font-size: 11px;
+        }
+
+        .footer span {
+          font-size: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="decoration"></div>
+    <div class="decoration"></div>
+    <div class="decoration"></div>
+
+    <div class="container">
+      <div class="error-title">¡Ups!</div>
+      <div class="error-code">404 - PÁGINA NO ENCONTRADA</div>
+      <div class="error-message">
+        La página que estás buscando podría haber sido eliminada,<br />
+        cambió de nombre o está temporalmente no disponible.
+      </div>
+      <a class="home-button" onclick="goHome()">IR AL INICIO</a>
+    </div>
+
+    <footer class="footer">
+      <p>
+        © 2025 - CEIEM - E.E.S.T N°4 "ING. EMILIO MITRE" - Todos los derechos
+        reservados
+      </p>
+      <span
+        >Diseñado por
+        <a href="https://www.instagram.com/nicocorera/" target="_blank"
+          >Nicolás Corera</a
+        ></span
+      >
+    </footer>
+
+    <script>
+      function goHome() {
+        window.location.href = "http://elecciones.ceiem.com.ar/ceiem/elecciones2025/";
+      }
+      document.addEventListener("mousemove", function (e) {
+        const cursor = document.createElement("div");
+        cursor.style.position = "fixed";
+        cursor.style.left = e.pageX + "px";
+        cursor.style.top = e.pageY + "px";
+        cursor.style.width = "10px";
+        cursor.style.height = "10px";
+        cursor.style.background = "rgba(168, 208, 255, 0.2)";
+        cursor.style.borderRadius = "50%";
+        cursor.style.pointerEvents = "none";
+        cursor.style.animation = "fadeOut 1s ease-out forwards";
+        document.body.appendChild(cursor);
+
+        setTimeout(() => {
+          cursor.remove();
+        }, 1000);
+      });
+
+      // Añadir animación de desvanecimiento
+      const style = document.createElement("style");
+      style.textContent = `
+            @keyframes fadeOut {
+                0% { opacity: 1; transform: scale(1); }
+                100% { opacity: 0; transform: scale(0); }
+            }
+        `;
+      document.head.appendChild(style);
+    </script>
+  </body>
+</html>

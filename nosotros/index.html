@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CEIEM - ¿Quiénes Somos?</title>
+    <link rel="shortcut icon" href="../img/logoCEIEM.png" type="image/x-icon" />
+    <style>
+      :root {
+        --primary: #052659;
+        --secondary: #547ba4;
+        --accent: #7da0ca;
+        --light: #546263;
+        --bg-light: #f8fafc;
+        --text-dark: #052659;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        /* font-family: "Inter", system-ui, -apple-system, sans-serif; */
+        font-family: "Montserrat", system-ui, -apple-system, sans-serif;
+      }
+
+      body {
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+      }
+
+      body::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      body::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+      }
+
+      body::-webkit-scrollbar-thumb {
+        background: var(--primary);
+        border-radius: 4px;
+      }
+
+      body::-webkit-scrollbar-thumb:hover {
+        background: var(--secondary);
+      }
+
+      /* Navbar */
+      .navbar {
+        background-color: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 15px rgba(5, 38, 89, 0.1);
+      }
+
+      .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        color: var(--text-dark);
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .nav-links a:hover {
+        background-color: var(--primary);
+        color: white;
+      }
+
+      .nav-links .active {
+        background-color: var(--primary);
+        color: white;
+      }
+
+      /* About Page Specific Styles */
+      .about-header {
+        margin-top: 80px;
+        padding: 4rem 2rem;
+        text-align: center;
+        background: linear-gradient(45deg, var(--primary), var(--secondary));
+        color: white;
+      }
+
+      .about-header h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .about-header p {
+        font-size: 1.2rem;
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      .about-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 4rem 2rem;
+      }
+
+      .about-section {
+        background: white;
+        border-radius: 20px;
+        padding: 3rem;
+        margin-bottom: 3rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      }
+
+      .about-section h2 {
+        color: var(--primary);
+        margin-bottom: 1.5rem;
+        font-size: 2rem;
+      }
+
+      .about-section p {
+        color: #475569;
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+      }
+
+      .team-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-top: 2rem;
+        align-items: center;
+      }
+
+      .team-member {
+        background: var(--bg-light);
+        padding: 1.5rem;
+        border-radius: 12px;
+        text-align: center;
+        transition: transform 0.3s ease;
+      }
+
+      .team-member:hover {
+        transform: translateY(-5px);
+      }
+
+      .team-member img {
+        width: 120px;
+        height: 160px;
+        margin-bottom: 1rem;
+        object-fit: cover;
+        border: 3px solid var(--primary);
+      }
+
+      .team-member h3 {
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .team-member p {
+        color: #64748b;
+        margin-bottom: 0;
+      }
+
+      .team-logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .team-logo img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid var(--primary);
+      }
+
+      /* Botón para ver equipos anteriores */
+      .team-history-button {
+        display: block;
+        margin: 2rem auto 0;
+        padding: 0.8rem 1.8rem;
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .team-history-button:hover {
+        background-color: var(--secondary);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(5, 38, 89, 0.2);
+      }
+
+      /* Estilos para el historial de equipos */
+      .team-history {
+        margin-top: 2rem;
+        display: none;
+      }
+
+      .team-history.active {
+        display: block;
+        max-height: 800px;
+        overflow-y: auto;
+        margin-top: 2rem;
+        padding-right: 1rem;
+      }
+
+      /* Estilo para la barra de desplazamiento */
+      .team-history::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .team-history::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+      }
+
+      .team-history::-webkit-scrollbar-thumb {
+        background: var(--primary);
+        border-radius: 4px;
+      }
+
+      .team-history::-webkit-scrollbar-thumb:hover {
+        background: var(--secondary);
+      }
+
+      .team-year {
+        margin-bottom: 3rem;
+        background: var(--bg-light);
+        padding: 1.5rem;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .team-header-top {
+        text-align: left;
+        margin-bottom: 1.5rem;
+      }
+
+      .team-year-title-top {
+        color: var(--primary);
+        font-size: 1.8rem;
+        line-height: 0.8rem;
+      }
+
+      .team-list-name-top {
+        color: var(--secondary);
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin-top: 0;
+      }
+
+      .reelection-badge {
+        display: inline-block;
+        background-color: var(--secondary);
+        color: white;
+        font-size: 0.8rem;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        margin-left: 1rem;
+        vertical-align: middle;
+      }
+
+      /* Modifica el team-header para mejor alineación */
+      .team-header {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .year-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .change-notice {
+        background-color: var(--accent);
+        color: white;
+        font-size: 0.8rem;
+        padding: 0.3rem 0.8rem;
+        border-radius: 4px;
+        margin-top: 0.5rem;
+        display: inline-block;
+      }
+
+      .vice-change {
+        border-top: 2px dashed var(--secondary);
+        margin-top: 1rem;
+        padding-top: 1rem;
+      }
+
+      .team-member.with-change {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .team-year-title {
+        color: var(--primary);
+        font-size: 1.8rem;
+        line-height: 1.5rem;
+      }
+
+      .team-list-name {
+        color: var(--secondary);
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin-top: 0;
+        letter-spacing: 0.5rem;
+      }
+
+      /* Estilos para la Galería */
+      .gallery-years {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .year-button {
+        padding: 0.8rem 1.8rem;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        letter-spacing: 0.05rem;
+        box-shadow: 0 2px 8px rgba(5, 38, 89, 0.2);
+      }
+
+      .year-button:hover {
+        background: var(--secondary);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(5, 38, 89, 0.3);
+      }
+
+      .year-button.active {
+        background: var(--accent);
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+        transform: translateY(1px);
+      }
+
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.8rem;
+        margin-top: 2rem;
+        transition: opacity 0.4s ease;
+      }
+
+      .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.4s ease;
+      }
+
+      .gallery-item img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .gallery-item:hover {
+        box-shadow: 0 8px 25px rgba(5, 38, 89, 0.2);
+        transform: translateY(-5px);
+      }
+
+      .gallery-item:hover img {
+        transform: scale(1.08);
+      }
+
+      .gallery-item::after {
+        content: "Ver imagen";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 0.8rem;
+        background: rgba(5, 38, 89, 0.8);
+        color: white;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(100%);
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .gallery-item:hover::after {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Estilos del Lightbox */
+      .lightbox {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.85);
+        z-index: 1100;
+        padding: 2rem;
+        backdrop-filter: blur(5px);
+        transition: opacity 0.4s ease;
+      }
+
+      .lightbox.active {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: fadeIn 0.3s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .lightbox-content {
+        position: relative;
+        max-width: 90%;
+        max-height: 90vh;
+        animation: scaleIn 0.3s ease;
+      }
+
+      @keyframes scaleIn {
+        from {
+          transform: scale(0.9);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+
+      .lightbox-image {
+        max-width: 100%;
+        max-height: 85vh;
+        object-fit: contain;
+        border-radius: 10px;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+      }
+
+      .lightbox-close {
+        position: absolute;
+        top: -2.5rem;
+        right: -2.5rem;
+        background: var(--primary);
+        color: white;
+        border: none;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 1.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .lightbox-close:hover {
+        background: var(--secondary);
+        transform: scale(1.1);
+      }
+
+      .lightbox-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: var(--primary);
+        color: white;
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 1.2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .lightbox-nav:hover {
+        background: var(--secondary);
+        transform: translateY(-50%) scale(1.1);
+      }
+
+      .prev-button {
+        left: -70px;
+      }
+
+      .next-button {
+        right: -70px;
+      }
+
+      .lightbox-indicator {
+        position: absolute;
+        bottom: -2.5rem;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: white;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+      /* Footer styles from index */
+      footer {
+        background-color: #1e293b;
+        color: white;
+        padding: 2rem 2rem 2rem;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 4rem;
+        margin-bottom: 3rem;
+      }
+
+      .footer-section h4 {
+        color: #60a5fa;
+        margin-bottom: 1.5rem;
+        font-size: 1.2rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+      }
+
+      .footer-section h4::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 50px;
+        height: 2px;
+        background: var(--primary);
+      }
+
+      .footer-section p {
+        color: #cbd5e1;
+        line-height: 1.8;
+        margin-bottom: 0.3rem;
+      }
+
+      .footer-section a {
+        color: #cbd5e1;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .footer-section a:hover {
+        color: #60a5fa;
+      }
+
+      .footer-section iframe {
+        width: 100%;
+        max-width: 400px;
+        height: 250px;
+        border-radius: 12px;
+        margin-top: 1rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .footer-bottom {
+        border-top: 1px solid #334155;
+        padding-top: 2rem;
+        text-align: center;
+        color: #94a3b8;
+        font-size: 0.9rem;
+      }
+
+      .footer-bottom p {
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-bottom a {
+        color: #60a5fa;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .footer-bottom a:hover {
+        color: white;
+      }
+
+      @media (max-width: 768px) {
+        .navbar {
+          padding: 1rem;
+        }
+
+        .about-header h1 {
+          font-size: 2.5rem;
+        }
+
+        .about-section {
+          padding: 2rem;
+        }
+
+        .footer-content {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .footer-section iframe {
+          max-width: 100%;
+          height: 200px;
+        }
+
+        .team-grid {
+          grid-template-columns: 1fr;
+        }
+        .year-container {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .gallery-grid {
+          grid-template-columns: 1fr;
+          gap: 1.2rem;
+        }
+
+        .lightbox-content {
+          width: 95%;
+        }
+
+        .lightbox-close {
+          top: -3rem;
+          right: 0;
+          width: 40px;
+          height: 40px;
+        }
+
+        .lightbox-nav {
+          width: 40px;
+          height: 40px;
+          background-color: rgba(5, 38, 89, 0.8);
+        }
+
+        .prev-button {
+          left: 10px;
+        }
+
+        .next-button {
+          right: 10px;
+        }
+        .team-year-title {
+          font-size: 1.4rem;
+        }
+      }
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+      }
+
+      .menu-toggle span {
+        display: block;
+        width: 100%;
+        height: 3px;
+        background-color: var(--primary);
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+
+      /* Modify your existing media query */
+      @media (max-width: 768px) {
+        .menu-toggle {
+          display: flex;
+        }
+
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background-color: rgba(255, 255, 255, 0.95);
+          padding: 1rem;
+          flex-direction: column;
+          gap: 1rem;
+          box-shadow: 0 2px 15px rgba(5, 38, 89, 0.1);
+        }
+
+        .nav-links.active {
+          display: flex;
+        }
+
+        /* Animation for hamburger menu */
+        .menu-toggle.active span:first-child {
+          transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+          opacity: 0;
+        }
+
+        .menu-toggle.active span:last-child {
+          transform: rotate(-45deg) translate(6px, -6px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <a href="/" class="logo">CEIEM</a>
+      <div class="nav-links">
+        <a href="http://ceiem.com.ar/ceiem/nosotros" class="active"
+          >¿Quiénes Somos?</a
+        >
+        <a href="http://ceiem.com.ar/ceiem/archivos">Archivos</a>
+        <a href="http://ceiem.com.ar/ceiem/calendario">Calendario</a>
+        <a href="http://elecciones.ceiem.com.ar/">Elecciones</a>
+      </div>
+      <button class="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+
+    <header class="about-header">
+      <h1>¿Quiénes Somos?</h1>
+      <p>
+        Conoce al equipo que trabaja día a día por los derechos y el bienestar
+        de los estudiantes del MITRE.
+      </p>
+    </header>
+
+    <main class="about-content">
+      <section class="about-section">
+        <h2>Nuestra Misión</h2>
+        <p>
+          El CEIEM (Centro de Estudiantes Ingeniero Emilio Mitre) es el órgano
+          representante de los estudiantes de nuestra escuela, trabajando para
+          representar y defender sus derechos e intereses.
+        </p>
+        <p>Su misión es diversa y crucial para la vida en el ámbito escolar.</p>
+        <p>
+          El CEIEM organiza a lo largo de los años eventos deportivos,
+          culturales y lúdicos que promueven la convivencia, el espíritu
+          comunitario, y el sentido de pertenencia a la escuela. También
+          colabora en el mantenimiento y reparación de los espacios escolares,
+          apuntando a asegurar un entorno adecuado para el aprendizaje.
+        </p>
+        <p>
+          Una de sus funciones principales es facilitar la comunicación entre
+          estudiantes y directivos, representando las necesidades y intereses de
+          los estudiantes.
+        </p>
+        <p>
+          De esta manera, el CEIEM juega un papel fundamental en la construcción
+          de una comunidad escolar activa, participativa y democrática.
+        </p>
+      </section>
+
+      <section class="about-section">
+        <h2>Nuestros Objetivos</h2>
+        <p>Como centro de estudiantes, nos enfocamos en:</p>
+        <p>
+          • Representar y defender los derechos e intereses de todos los
+          estudiantes
+        </p>
+        <p>• Fomentar la participación activa en la vida escolar</p>
+        <p>• Organizar eventos culturales, deportivos y académicos</p>
+        <p>
+          • Promover la comunicación efectiva entre estudiantes y autoridades
+        </p>
+      </section>
+
+      <section class="about-section">
+        <div class="team-header-top">
+          <h3 class="team-year-title-top">CEIEM 2025</h3>
+          <p class="team-list-name-top">Lista 252</p>
+        </div>
+        <div class="team-grid">
+          <div class="team-member">
+            <img
+              src="../img/Facundo Heredia Bustamante.jpeg"
+              alt="Presidente"
+            />
+            <h3>Presidente</h3>
+            <h3>Facundo Heredia Bustamante</h3>
+            <p>2025</p>
+          </div>
+          <div class="team-logo">
+            <img src="../img/CEIEM 252.jpeg" alt="Logo CEIEM" />
+          </div>
+          <div class="team-member">
+            <img src="../img/Lionel Horacio Lijo.jpg" alt="Vicepresidente" />
+            <h3>Vicepresidente</h3>
+            <h3>Lionel Horacio Lijo</h3>
+            <p>2025</p>
+          </div>
+        </div>
+        <!-- Botón para ver equipos anteriores -->
+        <button id="showTeamHistory" class="team-history-button">
+          Ver Centros Anteriores
+        </button>
+
+        <!-- Contenedor para los equipos anteriores -->
+        <div id="teamHistory" class="team-history">
+          <!-- Años anteriores serán agregados aquí con JavaScript -->
+        </div>
+      </section>
+      <section class="about-section">
+        <h2>Historia del Mitre</h2>
+        <p>
+          La Escuela Ingeniero Emilio Mitre, fundada en 1926, ha sido testigo de
+          la evolución y el crecimiento de generaciones de argentinos y
+          argentinas. Con el paso de los años, la institución ha ido adaptándose
+          a las necesidades del país, y en 1976, se inauguró su nuevo y actual
+          edificio, ubicado en la ciudad de General San Martín, provincia de
+          Buenos Aires; equipado con grandes instalaciones, talleres y
+          laboratorios.
+        </p>
+        <p>
+          Desde entonces, la escuela ha continuado su misión de formar a miles
+          de jóvenes comprometidos con el desarrollo y el progreso de la
+          Argentina. A lo largo de su historia, el Emilio Mitre ha demostrado su
+          compromiso con la educación de calidad y su dedicación a la formación
+          de ciudadanos profesionales. Hoy en día, nuestra escuela sigue siendo
+          un referente en la educación pública técnica argentina, y su legado
+          continúa inspirando a futuras generaciones.
+        </p>
+      </section>
+
+      <section class="about-section">
+        <h2 id="gallery-title">Galería de Imágenes - 2025</h2>
+        <div class="gallery-years">
+          <button class="year-button" data-year="2019">2019</button>
+          <button class="year-button" data-year="2022">2022</button>
+          <button class="year-button" data-year="2024">2024</button>
+          <button class="year-button active" data-year="2025">2025</button>
+        </div>
+        <!-- Galería visible (solo 3 imágenes) -->
+        <div class="gallery-grid" id="2019" style="display: none">
+          <div class="gallery-item">
+            <img src="../img/imgs/2019/2019_1.jpeg" alt="Evento 1 2019" />
+          </div>
+          <div class="gallery-item">
+            <img src="../img/imgs/2019/2019_2.jpeg" alt="Evento 2 2019" />
+          </div>
+          <div class="gallery-item">
+            <img src="../img/imgs/2019/2019_3.jpeg" alt="Evento 3 2019" />
+          </div>
+        </div>
+        <div class="gallery-grid" id="2022" style="display: none">
+          <div class="gallery-item">
+            <img src="../img/imgs/2022/2022_1.jpeg" alt="Evento 1 2022" />
+          </div>
+          <div class="gallery-item">
+            <img src="../img/imgs/2022/2022_2.jpeg" alt="Evento 2 2022" />
+          </div>
+          <div class="gallery-item">
+            <img src="../img/imgs/2022/2022_3.jpeg" alt="Evento 3 2022" />
+          </div>
+        </div>
+        <div class="gallery-grid" id="2024" style="display: none">
+          <div class="gallery-item">
+            <img src="../img/imgs/2024/2024_1.jpeg" alt="Evento 1 2024" />
+          </div>
+          <div class="gallery-item">
+            <img src="../img/imgs/2024/2024_2.jpeg" alt="Evento 2 2024" />
+          </div>
+          <div class="gallery-item">
+            <img src="../img/imgs/2024/2024_3.jpeg" alt="Evento 3 2024" />
+          </div>
+        </div>
+        <div class="gallery-grid" id="2025">
+          <div class="gallery-item">
+            <img src="../img/imgs/2025/2025_1.jpeg" alt="Evento 1 2025" />
+          </div>
+          <div class="gallery-item">
+            <img src="../img/imgs/2025/2025_2.jpeg" alt="Evento 2 2025" />
+          </div>
+          <div class="gallery-item">
+            <img src="../img/imgs/2025/2025_3.jpeg" alt="Evento 3 2025" />
+          </div>
+        </div>
+
+        <!-- Contenedor oculto con todas las imágenes -->
+        <div id="allImages" style="display: none">
+          <div data-year="2019">
+            <img src="../img/imgs/2019/2019_1.jpeg" alt="Evento 1 2019" />
+            <img src="../img/imgs/2019/2019_2.jpeg" alt="Evento 2 2019" />
+            <img src="../img/imgs/2019/2019_3.jpeg" alt="Evento 3 2019" />
+            <img src="../img/imgs/2019/2019_4.jpeg" alt="Evento 4 2019" />
+            <img src="../img/imgs/2019/2019_5.jpeg" alt="Evento 5 2019" />
+            <img src="../img/imgs/2019/2019_6.jpeg" alt="Evento 6 2019" />
+            <img src="../img/imgs/2019/2019_7.jpeg" alt="Evento 7 2019" />
+            <img src="../img/imgs/2019/2019_8.jpeg" alt="Evento 8 2019" />
+            <img src="../img/imgs/2019/2019_9.jpeg" alt="Evento 9 2019" />
+          </div>
+          <div data-year="2022">
+            <img src="../img/imgs/2022/2022_1.jpeg" alt="Evento 1 2022" />
+            <img src="../img/imgs/2022/2022_2.jpeg" alt="Evento 2 2022" />
+            <img src="../img/imgs/2022/2022_3.jpeg" alt="Evento 3 2022" />
+            <img src="../img/imgs/2022/2022_4.jpeg" alt="Evento 4 2022" />
+            <img src="../img/imgs/2022/2022_5.jpeg" alt="Evento 5 2022" />
+            <img src="../img/imgs/2022/2022_6.jpeg" alt="Evento 6 2022" />
+            <img src="../img/imgs/2022/2022_7.jpeg" alt="Evento 7 2022" />
+          </div>
+          <div data-year="2024">
+            <img src="../img/imgs/2024/2024_1.jpeg" alt="Evento 1 2024" />
+            <img src="../img/imgs/2024/2024_2.jpeg" alt="Evento 2 2024" />
+            <img src="../img/imgs/2024/2024_3.jpeg" alt="Evento 3 2024" />
+            <img src="../img/imgs/2024/2024_4.jpeg" alt="Evento 4 2024" />
+            <img src="../img/imgs/2024/2024_5.jpeg" alt="Evento 5 2024" />
+            <img src="../img/imgs/2024/2024_6.jpeg" alt="Evento 6 2024" />
+            <img src="../img/imgs/2024/2024_7.jpeg" alt="Evento 7 2024" />
+            <img src="../img/imgs/2024/2024_8.jpeg" alt="Evento 8 2024" />
+            <img src="../img/imgs/2024/2024_9.jpeg" alt="Evento 9 2024" />
+            <img src="../img/imgs/2024/2024_10.jpeg" alt="Evento 10 2024" />
+            <img src="../img/imgs/2024/2024_11.jpeg" alt="Evento 11 2024" />
+            <img src="../img/imgs/2024/2024_12.jpeg" alt="Evento 12 2024" />
+            <img src="../img/imgs/2024/2024_13.jpeg" alt="Evento 13 2024" />
+            <img src="../img/imgs/2024/2024_14.jpeg" alt="Evento 14 2024" />
+            <img src="../img/imgs/2024/2024_15.jpeg" alt="Evento 15 2024" />
+            <img src="../img/imgs/2024/2024_16.jpeg" alt="Evento 16 2024" />
+            <img src="../img/imgs/2024/2024_17.jpeg" alt="Evento 17 2024" />
+            <img src="../img/imgs/2024/2024_18.jpeg" alt="Evento 18 2024" />
+            <img src="../img/imgs/2024/2024_19.jpeg" alt="Evento 19 2024" />
+            <img src="../img/imgs/2024/2024_20.jpeg" alt="Evento 20 2024" />
+            <img src="../img/imgs/2024/2024_21.jpeg" alt="Evento 21 2024" />
+            <img src="../img/imgs/2024/2024_22.jpeg" alt="Evento 22 2024" />
+            <img src="../img/imgs/2024/2024_23.jpeg" alt="Evento 23 2024" />
+            <img src="../img/imgs/2024/2024_24.jpeg" alt="Evento 24 2024" />
+            <img src="../img/imgs/2024/2024_25.jpeg" alt="Evento 25 2024" />
+            <img src="../img/imgs/2024/2024_26.jpeg" alt="Evento 26 2024" />
+            <img src="../img/imgs/2024/2024_27.jpeg" alt="Evento 27 2024" />
+            <img src="../img/imgs/2024/2024_28.jpeg" alt="Evento 28 2024" />
+            <img src="../img/imgs/2024/2024_29.jpeg" alt="Evento 29 2024" />
+            <img src="../img/imgs/2024/2024_30.jpeg" alt="Evento 30 2024" />
+          </div>
+          <div data-year="2025">
+            <img src="../img/imgs/2025/2025_1.jpeg" alt="Evento 1 2025" />
+            <img src="../img/imgs/2025/2025_2.jpeg" alt="Evento 2 2025" />
+            <img src="../img/imgs/2025/2025_3.jpeg" alt="Evento 3 2025" />
+            <img src="../img/imgs/2025/2025_4.jpeg" alt="Evento 4 2025" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Lightbox -->
+      <div class="lightbox">
+        <div class="lightbox-content">
+          <img src="" alt="" class="lightbox-image" />
+          <button class="lightbox-close">×</button>
+          <button class="lightbox-nav prev-button">←</button>
+          <button class="lightbox-nav next-button">→</button>
+          <div class="lightbox-indicator">1 / 10</div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-bottom">
+        <p>
+          © 2025 - CEIEM - E.E.S.T N°4 "ING. EMILIO MITRE" - Todos los derechos
+          reservados
+        </p>
+        <p>
+          Diseñado por
+          <a href="https://www.instagram.com/nicocorera/" target="_blank"
+            >Nicolás Corera</a
+          >
+        </p>
+      </div>
+    </footer>
+    <script>
+      // Mejoras para el JavaScript del carrusel
+      const yearButtons = document.querySelectorAll(".year-button");
+      const galleryGrids = document.querySelectorAll(".gallery-grid");
+      const lightbox = document.querySelector(".lightbox");
+      const lightboxImage = document.querySelector(".lightbox-image");
+      const closeButton = document.querySelector(".lightbox-close");
+      const prevButton = document.querySelector(".prev-button");
+      const nextButton = document.querySelector(".next-button");
+      const allImagesContainer = document.getElementById("allImages");
+      const galleryTitle = document.getElementById("gallery-title");
+      const lightboxIndicator = document.querySelector(".lightbox-indicator");
+
+      let currentImageIndex = 0;
+      let currentImages = [];
+      let currentYear = "2025"; // Año por defecto
+
+      // Función para actualizar los botones activos
+      function updateActiveButton(year) {
+        yearButtons.forEach((button) => {
+          if (button.dataset.year === year) {
+            button.classList.add("active");
+          } else {
+            button.classList.remove("active");
+          }
+        });
+      }
+
+      // Inicializar con el año actual
+      updateActiveButton(currentYear);
+
+      yearButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          currentYear = button.dataset.year;
+          updateActiveButton(currentYear);
+
+          galleryTitle.textContent = `Galería de Imágenes - ${currentYear}`;
+
+          // Animación suave para cambiar entre galerías
+          galleryGrids.forEach((grid) => {
+            if (grid.id === currentYear) {
+              grid.style.opacity = "0";
+              grid.style.display = "grid";
+              setTimeout(() => {
+                grid.style.opacity = "1";
+              }, 50);
+            } else {
+              grid.style.opacity = "0";
+              setTimeout(() => {
+                grid.style.display = "none";
+              }, 400);
+            }
+          });
+        });
+      });
+
+      // Lightbox functionality mejorado
+      document.querySelectorAll(".gallery-item").forEach((item) => {
+        item.addEventListener("click", () => {
+          const year = item.parentElement.id;
+          const yearContainer = allImagesContainer.querySelector(
+            `[data-year="${year}"]`
+          );
+          currentImages = Array.from(yearContainer.querySelectorAll("img"));
+
+          // Encuentra el índice correspondiente a la imagen clickeada
+          const clickedImageSrc = item.querySelector("img").src;
+          currentImageIndex = currentImages.findIndex(
+            (img) => img.src === clickedImageSrc
+          );
+
+          updateLightboxImage();
+          lightbox.classList.add("active");
+          document.body.style.overflow = "hidden";
+        });
+      });
+
+      function updateLightboxImage() {
+        lightboxImage.src = currentImages[currentImageIndex].src;
+        lightboxImage.alt = currentImages[currentImageIndex].alt;
+
+        // Actualizar el indicador
+        lightboxIndicator.textContent = `${currentImageIndex + 1} / ${
+          currentImages.length
+        }`;
+      }
+
+      closeButton.addEventListener("click", () => {
+        lightbox.classList.remove("active");
+        document.body.style.overflow = "auto";
+      });
+
+      prevButton.addEventListener("click", () => {
+        currentImageIndex =
+          (currentImageIndex - 1 + currentImages.length) % currentImages.length;
+
+        // Transición suave
+        lightboxImage.style.opacity = "0";
+        setTimeout(() => {
+          updateLightboxImage();
+          lightboxImage.style.opacity = "1";
+        }, 200);
+      });
+
+      nextButton.addEventListener("click", () => {
+        currentImageIndex = (currentImageIndex + 1) % currentImages.length;
+
+        // Transición suave
+        lightboxImage.style.opacity = "0";
+        setTimeout(() => {
+          updateLightboxImage();
+          lightboxImage.style.opacity = "1";
+        }, 200);
+      });
+
+      // Añadir navegación con teclado
+      document.addEventListener("keydown", (e) => {
+        if (lightbox.classList.contains("active")) {
+          if (e.key === "Escape") {
+            lightbox.classList.remove("active");
+            document.body.style.overflow = "auto";
+          } else if (e.key === "ArrowLeft") {
+            prevButton.click();
+          } else if (e.key === "ArrowRight") {
+            nextButton.click();
+          }
+        }
+      });
+
+      // Cerrar lightbox al hacer clic fuera de la imagen
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) {
+          lightbox.classList.remove("active");
+          document.body.style.overflow = "auto";
+        }
+      });
+
+      // Funcionalidad para ver equipos anteriores
+      const showTeamHistoryButton = document.getElementById("showTeamHistory");
+      const teamHistoryContainer = document.getElementById("teamHistory");
+      let teamHistoryVisible = false;
+
+      const previousTeams = [
+        {
+          year: "2024 - 2025",
+          list: "252",
+          isReelected: true,
+          president: {
+            hadChange: true,
+            initial: {
+              name: "Facundo Heredia Bustamante",
+              photo: "../img/Facundo Heredia Bustamante.jpeg",
+              period: "2025",
+            },
+            replacement: {
+              name: "Facundo Heredia Bustamante",
+              photo: "../img/Facundo Heredia Bustamante.jpeg",
+              period: "2024",
+            },
+            samePresident: true,
+          },
+          logo: "../img/CEIEM 252.jpeg",
+          vicePresident: {
+            hadChange: true,
+            initial: {
+              name: "Lionel Horacio Lijo",
+              photo: "../img/Lionel Horacio Lijo.jpg",
+              period: "2025",
+            },
+            replacement: {
+              name: "Melanie Lourdes Loto",
+              photo: "../img/vice.jpeg",
+              period: "2024 - 2025",
+            },
+          },
+        },
+        {
+          year: "2022 - 2023",
+          list: "512",
+          isReelected: true,
+          president: {
+            hadChange: true,
+            initial: {
+              name: "Malena Leyes",
+              photo: "../img/none.jpeg",
+              period: "2023",
+            },
+            replacement: {
+              name: "Malena Leyes",
+              photo: "../img/none.jpeg",
+              period: "2022",
+            },
+            samePresident: true, // Agregamos esta propiedad
+          },
+          logo: "../img/CEIEM 512.jpeg",
+          vicePresident: {
+            hadChange: true,
+            initial: {
+              name: "Gustavo Cardoso",
+              photo: "../img/none.jpeg",
+              period: "2023",
+            },
+            replacement: {
+              name: " Lautaro Lucchetta",
+              photo: "../img/none.jpeg",
+              period: "2022",
+            },
+          },
+        },
+        {
+          year: "2020 - 2021",
+          list: "316",
+          isReelected: true,
+          president: {
+            hadChange: false,
+            name: "Alejo Aguilar",
+            photo: "../img/none.jpeg",
+          },
+          logo: "../img/CEIEM 316.jpeg",
+          vicePresident: {
+            hadChange: false,
+            name: "Julieta Sabino",
+            photo: "../img/none.jpeg",
+          },
+        },
+        {
+          year: "2019",
+          list: "314",
+          isReelected: false,
+          president: {
+            hadChange: false,
+            name: "Dalila Benítez",
+            photo: "../img/none.jpeg",
+          },
+          logo: "../img/CEIEM 314.jpeg",
+          vicePresident: {
+            hadChange: false,
+            name: "Ramiro Galli",
+            photo: "../img/none.jpeg",
+          },
+        },
+      ];
+
+      // Función mejorada para generar el HTML de las autoridades
+      const getAuthorityHTML = (authority, title, teamYear) => {
+        if (!authority.hadChange) {
+          return `
+      <div class="team-member">
+        <img src="${authority.photo}" alt="${title} ${teamYear}" />
+        <h3>${title}</h3>
+        <h3>${authority.name}</h3>
+        <p>${teamYear}</p>
+      </div>
+    `;
+        }
+
+        return `
+    <div class="team-member with-change">
+      <div>
+        <img src="${authority.initial.photo}" alt="${title} inicial ${
+          authority.initial.period
+        }" />
+        <h3>${title}</h3>
+        <h3>${authority.initial.name}</h3>
+        <p>${authority.initial.period}</p>
+      </div>
+      ${
+        !authority.samePresident
+          ? '<span class="change-notice">Cambio de Autoridad</span>'
+          : ""
+      }
+      <div class="vice-change">
+        <img src="${authority.replacement.photo}" alt="${title} reemplazo ${
+          authority.replacement.period
+        }" />
+        <h3>${title}</h3>
+        <h3>${authority.replacement.name}</h3>
+        <p>${authority.replacement.period}</p>
+      </div>
+    </div>
+  `;
+      };
+
+      // Actualizar la parte del código que genera el HTML
+      showTeamHistoryButton.addEventListener("click", () => {
+        if (!teamHistoryVisible) {
+          showTeamHistoryButton.textContent = "Ocultar Centros Anteriores";
+          teamHistoryContainer.innerHTML = "";
+
+          previousTeams.forEach((team) => {
+            const yearElement = document.createElement("div");
+            yearElement.className = "team-year";
+
+            yearElement.innerHTML = `
+              <div class="team-header">
+                <div class="year-container">
+                  <h3 class="team-year-title">CEIEM ${team.year}</h3>
+                  ${
+                    team.isReelected
+                      ? '<span class="reelection-badge">Reelecto</span>'
+                      : ""
+                  }
+                </div>
+                <p class="team-list-name">Lista ${team.list}</p>
+              </div>
+              <div class="team-grid">
+                ${getAuthorityHTML(team.president, "Presidente", team.year)}
+                <div class="team-logo">
+                  <img src="${team.logo}" alt="Logo CEIEM ${team.year}" />
+                </div>
+                ${getAuthorityHTML(
+                  team.vicePresident,
+                  "Vicepresidente",
+                  team.year
+                )}
+              </div>
+            `;
+
+            teamHistoryContainer.appendChild(yearElement);
+          });
+
+          teamHistoryContainer.classList.add("active");
+        } else {
+          showTeamHistoryButton.textContent = "Ver Centros Anteriores";
+          teamHistoryContainer.classList.remove("active");
+        }
+
+        teamHistoryVisible = !teamHistoryVisible;
+      });
+    </script>
+    <script>
+      document
+        .querySelector(".menu-toggle")
+        .addEventListener("click", function () {
+          this.classList.toggle("active");
+          document.querySelector(".nav-links").classList.toggle("active");
+        });
+
+      // Close menu when clicking outside
+      document.addEventListener("click", function (event) {
+        const navbar = document.querySelector(".navbar");
+        const menuToggle = document.querySelector(".menu-toggle");
+        const navLinks = document.querySelector(".nav-links");
+
+        if (
+          !navbar.contains(event.target) &&
+          navLinks.classList.contains("active")
+        ) {
+          menuToggle.classList.remove("active");
+          navLinks.classList.remove("active");
+        }
+      });
+
+      // Close menu when clicking on a link
+      document.querySelectorAll(".nav-links a").forEach((link) => {
+        link.addEventListener("click", () => {
+          document.querySelector(".menu-toggle").classList.remove("active");
+          document.querySelector(".nav-links").classList.remove("active");
+        });
+      });
+    </script>
+  </body>
+</html>

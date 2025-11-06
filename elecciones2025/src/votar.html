@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Urna Digital - Votación Estudiantil</title>
+    <link rel="stylesheet" href="assets/css/styles.css?v=20250618" />
+    <script type="module" src="assets/js/firebase.js?v=20250662"></script>
+  </head>
+  <body>
+    <div class="container">
+      <main class="main-content voting-content">
+        <div class="voting-area">
+          <form class="voting-form" id="votingForm">
+            <div class="voting-options">
+              <div class="voting-option">
+                <input
+                  type="radio"
+                  id="lista1"
+                  name="voto"
+                  value="lista1"
+                  class="voting-radio"
+                />
+                <label for="lista1" class="voting-card">
+                  <img
+                    src="../src/images/boleta252.jpg"
+                    alt="Lista 252"
+                    class="card-image"
+                  />
+                </label>
+              </div>
+              <div class="voting-option">
+                <input
+                  type="radio"
+                  id="lista2"
+                  name="voto"
+                  value="lista2"
+                  class="voting-radio"
+                />
+                <label for="lista2" class="voting-card">
+                  <img
+                    src="../src/images/boleta203.jpg"
+                    alt="Lista 2"
+                    class="card-image"
+                  />
+                </label>
+              </div>
+              <div class="voting-option">
+                <input
+                  type="radio"
+                  id="lista3"
+                  name="voto"
+                  value="lista3"
+                  class="voting-radio"
+                />
+                <label for="lista3" class="voting-card">
+                  <img
+                    src="../src/images/voto_en_blanco_2.jpg"
+                    alt="Lista 3"
+                    class="card-image"
+                  />
+                </label>
+              </div>
+            </div>
+            <div class="voting-actions">
+              <button type="submit" class="btn-vote" id="submitVote" disabled>
+                Confirmar Voto
+              </button>
+            </div>
+          </form>
+        </div>
+      </main>
+    </div>
+    <script>
+      function checkFullscreenBySize() {
+        const ratio = window.innerHeight / window.screen.height;
+        if (ratio >= 0.98) {
+          // casi igual → fullscreen
+          document.body.style.overflow = "hidden";
+        } else {
+          document.body.style.overflow = "auto";
+        }
+      }
+
+      window.addEventListener("resize", checkFullscreenBySize);
+      checkFullscreenBySize(); // chequea al inicio
+    </script>
+  </body>
+</html>

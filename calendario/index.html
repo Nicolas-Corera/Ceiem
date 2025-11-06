@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CEIEM - Calendario</title>
+    <link rel="shortcut icon" href="../img/logoCEIEM.png" type="image/x-icon">
+    <style>
+      :root {
+        --primary: #052659;
+        --secondary: #547ba4;
+        --accent: #7da0ca;
+        --light: #546263;
+        --bg-light: #f8fafc;
+        --text-dark: #0f172a;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        /* font-family: "Inter", system-ui, -apple-system, sans-serif; */
+        font-family: "Montserrat", system-ui, -apple-system, sans-serif;
+      }
+
+      body {
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+      }
+
+      body::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      body::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+      }
+
+      body::-webkit-scrollbar-thumb {
+        background: var(--primary);
+        border-radius: 4px;
+      }
+
+      body::-webkit-scrollbar-thumb:hover {
+        background: var(--secondary);
+      }
+
+      /* Navbar */
+      .navbar {
+        background-color: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 15px rgba(5, 38, 89, 0.1);
+      }
+
+      .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        color: var(--text-dark);
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .nav-links a:hover {
+        background-color: var(--primary);
+        color: white;
+      }
+
+      .nav-links .active {
+        background-color: var(--primary);
+        color: white;
+      }
+
+      /* Calendar Page Specific Styles */
+      .calendar-header {
+        margin-top: 80px;
+        padding: 4rem 2rem;
+        text-align: center;
+        background: linear-gradient(45deg, var(--primary), var(--secondary));
+        color: white;
+      }
+
+      .calendar-header h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .calendar-header p {
+        font-size: 1.2rem;
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      .calendar-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 4rem 2rem;
+      }
+
+      .calendar-filters {
+        margin-bottom: 2rem;
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .month-selector,
+      .event-type-filter {
+        padding: 0.8rem 1.2rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 1rem;
+        background-color: white;
+        cursor: pointer;
+        flex: 1;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        appearance: none; /* Elimina los estilos por defecto del sistema */
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        background-size: 10px;
+        min-width: 200PX;
+      }
+
+
+      /* Cambio de color al pasar el cursor */
+      .month-selector:hover,
+      .event-type-filter:hover {
+        border-color: #7da0ca;
+        box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Estilos cuando está enfocado */
+      .month-selector:focus,
+      .event-type-filter:focus {
+        outline: none;
+        border-color: #547ba4;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+      }
+
+      /* Ajuste para navegadores que no soportan `appearance: none` */
+      @supports not (-moz-appearance: none) {
+        .month-selector,
+        .event-type-filter {
+          background-image: none;
+        }
+      }
+
+      .timeline {
+        position: relative;
+        padding: 2rem 0;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 2px;
+        height: 100%;
+        background-color: var(--primary);
+      }
+
+      .month-section {
+        margin-bottom: 3rem;
+        padding-left: 2rem;
+      }
+
+      .month-title {
+        color: var(--primary);
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+      }
+
+      .month-title::before {
+        content: "";
+        position: absolute;
+        left: -2rem;
+        top: 50%;
+        width: 1rem;
+        height: 1rem;
+        background-color: var(--primary);
+        border-radius: 50%;
+        transform: translateY(-50%);
+      }
+
+      .event-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease;
+      }
+
+      .event-card:hover {
+        transform: translateX(10px);
+      }
+
+      .event-date {
+        color: var(--primary);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .event-title {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .event-description {
+        color: #64748b;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+      }
+
+      .event-tag {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        margin-right: 0.5rem;
+      }
+
+      .tag-centro {
+        background-color: #dbeafe;
+        color: #1e40af;
+      }
+
+      .tag-cultural {
+        background-color: #fae8ff;
+        color: #86198f;
+      }
+
+      .tag-academico {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+
+      .quick-links {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      }
+
+      .quick-links h3 {
+        color: var(--primary);
+        margin-bottom: 1rem;
+      }
+
+      .quick-links-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+      }
+
+      .quick-link {
+        padding: 0.8rem;
+        background-color: var(--bg-light);
+        border-radius: 8px;
+        text-align: center;
+        text-decoration: none;
+        color: var(--text-dark);
+        transition: all 0.3s ease;
+      }
+
+      .quick-link:hover {
+        background-color: var(--primary);
+        color: white;
+      }
+
+      /* Footer */
+      footer {
+        background-color: #1e293b;
+        color: white;
+        padding: 2rem 2rem 2rem;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 4rem;
+        margin-bottom: 3rem;
+      }
+
+      .footer-section h4 {
+        color: #60a5fa;
+        margin-bottom: 1.5rem;
+        font-size: 1.2rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+      }
+
+      .footer-section h4::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 50px;
+        height: 2px;
+        background: var(--primary);
+      }
+
+      .footer-section p {
+        color: #cbd5e1;
+        line-height: 1.8;
+        margin-bottom: 0.3rem;
+      }
+
+      .footer-section a {
+        color: #cbd5e1;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .footer-section a:hover {
+        color: #60a5fa;
+      }
+
+      .footer-section iframe {
+        width: 100%;
+        max-width: 400px;
+        height: 250px;
+        border-radius: 12px;
+        margin-top: 1rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .footer-bottom {
+        border-top: 1px solid #334155;
+        padding-top: 2rem;
+        text-align: center;
+        color: #94a3b8;
+        font-size: 0.9rem;
+      }
+
+      .footer-bottom p {
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-bottom a {
+        color: #60a5fa;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .footer-bottom a:hover {
+        color: white;
+      }
+
+      @media (max-width: 768px) {
+        .navbar {
+          padding: 1rem;
+        }
+
+        .calendar-header h1 {
+          font-size: 2.5rem;
+        }
+
+        .calendar-content {
+          padding: 2rem 1rem;
+        }
+
+        .calendar-filters {
+          flex-direction: column;
+        }
+
+        .timeline::before {
+          left: 1rem;
+        }
+
+        .month-section {
+          padding-left: 3rem;
+        }
+
+        .month-title::before {
+          left: -2rem;
+        }
+
+        .footer-content {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .footer-section iframe {
+          max-width: 100%;
+          height: 200px;
+        }
+      }
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+      }
+
+      .menu-toggle span {
+        display: block;
+        width: 100%;
+        height: 3px;
+        background-color: var(--primary);
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+
+      /* Modify your existing media query */
+      @media (max-width: 768px) {
+        .menu-toggle {
+          display: flex;
+        }
+
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background-color: rgba(255, 255, 255, 0.95);
+          padding: 1rem;
+          flex-direction: column;
+          gap: 1rem;
+          box-shadow: 0 2px 15px rgba(5, 38, 89, 0.1);
+        }
+
+        .nav-links.active {
+          display: flex;
+        }
+
+        /* Animation for hamburger menu */
+        .menu-toggle.active span:first-child {
+          transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+          opacity: 0;
+        }
+
+        .menu-toggle.active span:last-child {
+          transform: rotate(-45deg) translate(6px, -6px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <a href="/" class="logo">CEIEM</a>
+      <div class="nav-links">
+        <a href="http://ceiem.com.ar/ceiem/nosotros">¿Quiénes Somos?</a>
+        <a href="http://ceiem.com.ar/ceiem/archivos">Archivos</a>
+        <a href="http://ceiem.com.ar/ceiem/calendario" class="active">Calendario</a>
+        <a href="http://elecciones.ceiem.com.ar/">Elecciones</a>
+      </div>
+      <button class="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+
+    <header class="calendar-header">
+      <h1>Calendario Escolar</h1>
+      <p>
+        Mantente al día con todas las fechas importantes, eventos y actividades
+        del ciclo lectivo 2025.
+      </p>
+    </header>
+
+    <main class="calendar-content">
+      <!-- <div class="quick-links">
+        <h3>Accesos Rápidos</h3>
+        <div class="quick-links-grid">
+          <a href="#" class="quick-link">Académico</a>
+          <a href="#" class="quick-link">Culturales</a>
+          <a href="#" class="quick-link">Centro</a>
+        </div>
+      </div> -->
+
+      <div class="calendar-filters">
+        <select class="month-selector">
+          <option value="">Todos los meses</option>
+        </select>
+        <select class="event-type-filter">
+          <option value="">Todos los eventos</option>
+          <option value="academico">Académicos</option>
+          <option value="cultural">Culturales</option>
+          <option value="centro">Centro</option>
+          <!-- <option value="deportivo">Deportivos</option> -->
+        </select>
+      </div>
+
+      <div class="timeline">
+        <!-- El contenido se generará dinámicamente con JavaScript -->
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-bottom">
+        <p>
+          © 2025 - CEIEM - E.E.S.T N°4 "ING. EMILIO MITRE" - Todos los derechos
+          reservados
+        </p>
+        <p>
+          Diseñado por
+          <a href="https://www.instagram.com/nicocorera/" target="_blank"
+            >Nicolás Corera</a
+          >
+        </p>
+      </div>
+    </footer>
+    <script src="calendar.js"></script>
+    <script>
+      document
+        .querySelector(".menu-toggle")
+        .addEventListener("click", function () {
+          this.classList.toggle("active");
+          document.querySelector(".nav-links").classList.toggle("active");
+        });
+
+      // Close menu when clicking outside
+      document.addEventListener("click", function (event) {
+        const navbar = document.querySelector(".navbar");
+        const menuToggle = document.querySelector(".menu-toggle");
+        const navLinks = document.querySelector(".nav-links");
+
+        if (
+          !navbar.contains(event.target) &&
+          navLinks.classList.contains("active")
+        ) {
+          menuToggle.classList.remove("active");
+          navLinks.classList.remove("active");
+        }
+      });
+
+      // Close menu when clicking on a link
+      document.querySelectorAll(".nav-links a").forEach((link) => {
+        link.addEventListener("click", () => {
+          document.querySelector(".menu-toggle").classList.remove("active");
+          document.querySelector(".nav-links").classList.remove("active");
+        });
+      });
+    </script>
+  </body>
+</html>

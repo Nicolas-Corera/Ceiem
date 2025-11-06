@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel de Administración - Sistema de Votación</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  </head>
+  <body>
+    <div id="authOverlay" class="auth-overlay">
+      <div class="auth-modal">
+        <div class="auth-logo"></div>
+        <h2>Acceso Administrativo</h2>
+        <p class="auth-subtitle">Ingrese el PIN de 6 dígitos para continuar</p>
+        <div class="pin-container">
+          <input
+            type="password"
+            class="pin-input"
+            maxlength="1"
+            data-index="0"
+          />
+          <input
+            type="password"
+            class="pin-input"
+            maxlength="1"
+            data-index="1"
+          />
+          <input
+            type="password"
+            class="pin-input"
+            maxlength="1"
+            data-index="2"
+          />
+          <input
+            type="password"
+            class="pin-input"
+            maxlength="1"
+            data-index="3"
+          />
+          <input
+            type="password"
+            class="pin-input"
+            maxlength="1"
+            data-index="4"
+          />
+          <input
+            type="password"
+            class="pin-input"
+            maxlength="1"
+            data-index="5"
+          />
+        </div>
+        <button id="loginBtn" class="auth-btn">Verificar & Continuar</button>
+        <div id="authError" class="auth-error" style="display: none"></div>
+      </div>
+    </div>
+    <div class="main-content-auth" id="mainContent">
+      <div class="container">
+        <h1>Panel de Administración - Sistema de Votación</h1>
+
+        <!-- Panel de estadísticas generales -->
+        <div class="stats-section">
+          <h2>Estadísticas Generales</h2>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-label">Total Votantes</div>
+              <div class="stat-number" id="totalAlumnos">0</div>
+              <div class="stat-label">de 1478 estudiantes</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Votos Emitidos</div>
+              <div class="stat-number" id="totalVotos">0</div>
+              <div class="stat-label">de 1478 estudiantes</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Participación</div>
+              <div class="stat-number" id="participacion">0%</div>
+              <div class="stat-label" id="total-students-porcentaje">
+                0/1478 estudiantes
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Estadísticas por lista -->
+        <div class="results-section">
+          <h2>Resultados por Lista</h2>
+          <div id="resultadosListas">
+            <!-- Se llena dinámicamente -->
+          </div>
+        </div>
+
+        <!-- Sección de Votantes Activos -->
+        <div class="active-voters-section">
+          <h2>Votantes Habilitados por Mesa (En Tiempo Real)</h2>
+          <div id="votantesActivosContainer">
+            <table id="votantesActivosTable">
+              <thead>
+                <tr>
+                  <th>DNI</th>
+                  <th>Nombre y Apellido</th>
+                  <th>División</th>
+                  <th>Mesa</th>
+                  <th>Fecha Habilitación</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="votantesActivosTableBody">
+                <!-- Se llena dinámicamente -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- NUEVA SECCIÓN: Control Global de DNIs -->
+        <div class="global-voters-section">
+          <h2>🔒 Control Global de DNIs Habilitados</h2>
+          <p style="color: #666; margin-bottom: 20px">
+            Esta tabla muestra todos los DNIs que están actualmente habilitados
+            en cualquier mesa del sistema.
+          </p>
+          <div id="votantesGlobalesContainer">
+            <table id="votantesGlobalesTable">
+              <thead>
+                <tr>
+                  <th>DNI</th>
+                  <th>Nombre y Apellido</th>
+                  <th>División</th>
+                  <th>Mesa Asignada</th>
+                  <th>Fecha Habilitación</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="votantesGlobalesTableBody">
+                <!-- Se llena dinámicamente -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Sección de búsqueda -->
+        <div class="search-section">
+          <h2>Búsqueda</h2>
+          <div class="search-controls">
+            <input
+              type="text"
+              id="buscarAlumno"
+              placeholder="Buscar alumno por DNI o división"
+            />
+            <button id="buscarAlumnoBtn">Buscar Alumno</button>
+            <input
+              type="text"
+              id="buscarVoto"
+              placeholder="Buscar voto por DNI"
+            />
+            <button id="buscarVotoBtn">Buscar Voto</button>
+          </div>
+        </div>
+
+        <!-- Listado de votos -->
+        <div class="votes-section">
+          <h2>Votos Emitidos</h2>
+          <div id="votosContainer">
+            <table id="votosTable">
+              <thead>
+                <tr>
+                  <th>DNI</th>
+                  <th>Nombre y Apellido</th>
+                  <th>División</th>
+                  <th>Fecha y Hora</th>
+                  <th>Mesa</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="votosTableBody">
+                <!-- Se llena dinámicamente -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="actions-section">
+          <h2>Acciones</h2>
+          <div class="actions-btn">
+            <button id="descargarResultados">Descargar Resultados (CSV)</button>
+            <button id="descargarExcel" class="btn-excel">
+              📊 Descargar Reporte Excel
+            </button>
+            <button id="borrarTodosVotos" class="danger-btn">
+              Borrar Todos los Votos
+            </button>
+          </div>
+        </div>
+
+        <!-- NUEVA SECCIÓN: Herramientas de Mantenimiento -->
+        <div class="maintenance-section">
+          <h2>🔧 Herramientas de Mantenimiento</h2>
+          <p style="color: #666; margin-bottom: 20px">
+            Estas herramientas ayudan a mantener la integridad del sistema de
+            votación.
+          </p>
+          <div class="maintenance-buttons">
+            <button id="limpiarHuerfanos" class="btn-primary">
+              🧹 Limpiar Registros Huérfanos
+            </button>
+            <button id="limpiarTodoGlobal" class="delete-btn">
+              ⚠️ Limpiar TODOS los DNIs Globales
+            </button>
+          </div>
+          <div class="maintenance-info">
+            <h4>Información de las herramientas:</h4>
+            <ul>
+              <li>
+                <strong>Limpiar Registros Huérfanos:</strong> Elimina DNIs que
+                quedaron registrados globalmente pero no tienen mesa activa
+                asignada.
+              </li>
+              <li>
+                <strong>Limpiar TODOS los DNIs Globales:</strong> ⚠️ CUIDADO:
+                Libera TODOS los DNIs habilitados del sistema. Usar solo para
+                testing o limpieza general.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Agregar antes de admin.js -->
+    <script type="module" src="assets/js/exportarExcel.js"></script>
+    <script type="module" src="assets/js/admin.js"></script>
+    <script>
+      const AUTH_PIN = "110805"; // PIN de 6 dígitos
+      const AUTH_KEY = "voting_admin_auth";
+
+      class AuthSystem {
+        constructor() {
+          this.currentPin = "";
+          this.init();
+        }
+
+        init() {
+          if (this.isAuthenticated()) {
+            this.showMainContent();
+          } else {
+            this.showAuthModal();
+          }
+
+          const pinInputs = document.querySelectorAll(".pin-input");
+          pinInputs.forEach((input, index) => {
+            input.addEventListener("input", (e) =>
+              this.handlePinInput(e, index)
+            );
+            input.addEventListener("keydown", (e) =>
+              this.handleKeydown(e, index)
+            );
+            input.addEventListener("paste", (e) => this.handlePaste(e));
+          });
+
+          document
+            .getElementById("loginBtn")
+            .addEventListener("click", () => this.login());
+
+          window.addEventListener("beforeunload", () => {
+            sessionStorage.removeItem(AUTH_KEY);
+          });
+        }
+
+        handlePinInput(e, index) {
+          const input = e.target;
+          const value = input.value;
+
+          if (value.length === 1 && /^\d$/.test(value)) {
+            input.classList.add("filled");
+            this.updatePin();
+            if (index < 5) {
+              const nextInput = document.querySelector(
+                `[data-index="${index + 1}"]`
+              );
+              nextInput.focus();
+            } else {
+              setTimeout(() => this.login(), 100);
+            }
+          } else {
+            input.value = "";
+            input.classList.remove("filled");
+            this.updatePin();
+          }
+        }
+
+        handleKeydown(e, index) {
+          const input = e.target;
+          if (e.key === "Backspace" && input.value === "" && index > 0) {
+            const prevInput = document.querySelector(
+              `[data-index="${index - 1}"]`
+            );
+            prevInput.focus();
+            prevInput.value = "";
+            prevInput.classList.remove("filled");
+            this.updatePin();
+          } else if (e.key === "ArrowLeft" && index > 0) {
+            const prevInput = document.querySelector(
+              `[data-index="${index - 1}"]`
+            );
+            prevInput.focus();
+          } else if (e.key === "ArrowRight" && index < 5) {
+            const nextInput = document.querySelector(
+              `[data-index="${index + 1}"]`
+            );
+            nextInput.focus();
+          } else if (e.key === "Enter") {
+            this.login();
+          }
+        }
+
+        handlePaste(e) {
+          e.preventDefault();
+          const paste = e.clipboardData.getData("text");
+          if (/^\d{6}$/.test(paste)) {
+            const pinInputs = document.querySelectorAll(".pin-input");
+            [...paste].forEach((digit, index) => {
+              if (index < 6) {
+                pinInputs[index].value = digit;
+                pinInputs[index].classList.add("filled");
+              }
+            });
+            this.updatePin();
+            setTimeout(() => this.login(), 100);
+          }
+        }
+
+        updatePin() {
+          const pinInputs = document.querySelectorAll(".pin-input");
+          this.currentPin = Array.from(pinInputs)
+            .map((input) => input.value)
+            .join("");
+        }
+
+        login() {
+          const errorDiv = document.getElementById("authError");
+          if (this.currentPin === AUTH_PIN) {
+            sessionStorage.setItem(AUTH_KEY, "true");
+            this.showMainContent();
+            errorDiv.style.display = "none";
+          } else {
+            errorDiv.textContent = "PIN incorrecto. Inténtelo nuevamente.";
+            errorDiv.style.display = "block";
+            this.clearPin();
+            const modal = document.querySelector(".auth-modal");
+            modal.style.animation = "shake 0.5s";
+            setTimeout(() => {
+              modal.style.animation = "";
+            }, 500);
+          }
+        }
+
+        clearPin() {
+          const pinInputs = document.querySelectorAll(".pin-input");
+          pinInputs.forEach((input) => {
+            input.value = "";
+            input.classList.remove("filled");
+          });
+          this.currentPin = "";
+          pinInputs[0].focus();
+        }
+
+        isAuthenticated() {
+          return sessionStorage.getItem(AUTH_KEY) === "true";
+        }
+
+        showMainContent() {
+          document.getElementById("authOverlay").style.display = "none";
+          document.getElementById("mainContent").classList.add("authenticated");
+        }
+
+        showAuthModal() {
+          document.getElementById("authOverlay").style.display = "flex";
+          document
+            .getElementById("mainContent")
+            .classList.remove("authenticated");
+          setTimeout(() => {
+            document.querySelector(".pin-input").focus();
+          }, 100);
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        new AuthSystem();
+      });
+
+      const style = document.createElement("style");
+      style.textContent = `
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          25% { transform: translateX(-5px); }
+          75% { transform: translateX(5px); }
+        }
+        
+        .maintenance-section {
+          background: #f8f9fa;
+          border: 1px solid #e9ecef;
+          border-radius: 8px;
+          padding: 20px;
+          margin: 20px 0;
+        }
+        
+        .maintenance-buttons {
+          display: flex;
+          gap: 15px;
+          margin: 15px 0;
+          flex-wrap: wrap;
+        }
+        
+        .maintenance-btn {
+          background: #17a2b8;
+          color: white;
+          border: none;
+          padding: 12px 20px;
+          border-radius: 5px;
+          cursor: pointer;
+          font-weight: bold;
+          transition: background 0.3s;
+        }
+        
+        .maintenance-btn:hover {
+          background: #138496;
+        }
+        
+        .maintenance-info {
+          background: #fff;
+          border: 1px solid #dee2e6;
+          border-radius: 5px;
+          padding: 15px;
+          margin-top: 15px;
+        }
+        
+        .maintenance-info ul {
+          margin: 10px 0 0 20px;
+          color: #666;
+        }
+        
+        .maintenance-info li {
+          margin: 8px 0;
+          line-height: 1.4;
+        }
+        
+        .global-voters-section {
+          background: #fff3cd;
+          border: 1px solid #ffeaa7;
+          border-radius: 8px;
+          padding: 20px;
+          margin: 20px 0;
+        }
+        
+        .btn-dni-ocupado {
+          background-color: #f39c12 !important;
+          color: white;
+          cursor: not-allowed;
+        }
+      `;
+      document.head.appendChild(style);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mesa de Control - Registro de Votantes</title>
+    <link rel="stylesheet" href="assets/css/styles.css?v=20250613" />
+    <script type="module" src="assets/js/firebase.js?v=20250613"></script>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1 class="header-title">Mesa de Control Electoral</h1>
+        <p class="header-subtitle">Registro de Votantes</p>
+      </header>
+      <main class="main-content">
+        <div class="control-panel">
+          <h2 class="panel-title">Registro de Nuevo Votante</h2>
+          <form class="voter-form" id="voterRegistrationForm">
+            <div class="form-group">
+              <label for="dni" class="form-label">DNI</label>
+              <input
+                type="text"
+                id="dni"
+                name="dni"
+                class="form-input"
+                placeholder="12.345.678"
+                maxlength="10"
+                required
+              />
+              <div class="format-hint">Formato: XX.XXX.XXX</div>
+            </div>
+            <div class="form-group">
+              <label for="nombre_apellido" class="form-label"
+                >Nombre y Apellido</label
+              >
+              <input
+                type="text"
+                id="nombre_apellido"
+                name="nombre_apellido"
+                class="form-input"
+                placeholder="Juan Pérez"
+                required
+              />
+              <div class="format-hint">
+                Las mayúsculas se colocan automaticamente.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="division" class="form-label">División o Curso</label>
+              <input
+                type="text"
+                id="division"
+                name="division"
+                class="form-input"
+                placeholder="5°5°"
+                maxlength="4"
+                required
+              />
+              <div class="format-hint">Formato: X°X (ej: 5°5°, 1°B°)</div>
+            </div>
+            <button type="submit" class="btn-primary" id="registerVoter">
+              Confirmar Registro
+            </button>
+          </form>
+        </div>
+        <div class="status-panel">
+          <h3 class="status-title">Estado del Sistema</h3>
+          <div class="voters-list-section">
+            <div class="voters-list-header">
+              <span class="voters-list-title">Personas que ya Votaron</span>
+              <button class="btn-toggle-list" id="toggleVotersList">
+                Mostrar Lista
+              </button>
+            </div>
+            <div class="voters-list" id="votersList">
+              <div class="empty-list">No hay votantes registrados aún</div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script>
+      document
+        .getElementById("nombre_apellido")
+        .addEventListener("input", function (e) {
+          let value = e.target.value;
+          value = value.toLowerCase().replace(/\b\w/g, function (char) {
+            return char.toUpperCase();
+          });
+          e.target.value = value;
+        });
+      document
+        .getElementById("division")
+        .addEventListener("input", function (e) {
+          let value = e.target.value.replace(/[^0-9A-Za-z]/g, ""); // Solo números y letras
+          let formattedValue = "";
+          if (value.length >= 1) {
+            if (/[0-9]/.test(value.charAt(0))) {
+              formattedValue = value.charAt(0) + "°";
+              if (value.length >= 2) {
+                let secondChar = value.charAt(1);
+                if (/[A-Za-z]/.test(secondChar)) {
+                  secondChar = secondChar.toUpperCase();
+                }
+                formattedValue += secondChar + "°";
+              }
+            } else {
+              formattedValue = "";
+            }
+          }
+          if (value.length > 2) {
+            value = value.substring(0, 2);
+            let secondChar = value.charAt(1);
+            if (/[A-Za-z]/.test(secondChar)) {
+              secondChar = secondChar.toUpperCase();
+            }
+            formattedValue = value.charAt(0) + "°" + secondChar + "°";
+          }
+          e.target.value = formattedValue;
+        });
+      document.getElementById("dni").addEventListener("keypress", function (e) {
+        if (
+          !/[0-9]/.test(e.key) &&
+          !["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"].includes(
+            e.key
+          )
+        ) {
+          e.preventDefault();
+        }
+      });
+      document
+        .getElementById("nombre_apellido")
+        .addEventListener("keypress", function (e) {
+          if (
+            !/[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]/.test(e.key) &&
+            !["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"].includes(
+              e.key
+            )
+          ) {
+            e.preventDefault();
+          }
+        });
+      document
+        .getElementById("division")
+        .addEventListener("keypress", function (e) {
+          let currentValue = e.target.value.replace(/[^0-9A-Za-z]/g, "");
+          if (currentValue.length === 0) {
+            if (
+              !/[0-9]/.test(e.key) &&
+              ![
+                "Backspace",
+                "Delete",
+                "ArrowLeft",
+                "ArrowRight",
+                "Tab",
+              ].includes(e.key)
+            ) {
+              e.preventDefault();
+            }
+          }
+          else if (currentValue.length === 1) {
+            if (
+              !/[0-9A-Za-z]/.test(e.key) &&
+              ![
+                "Backspace",
+                "Delete",
+                "ArrowLeft",
+                "ArrowRight",
+                "Tab",
+              ].includes(e.key)
+            ) {
+              e.preventDefault();
+            }
+          }
+          else if (currentValue.length >= 2) {
+            if (
+              ![
+                "Backspace",
+                "Delete",
+                "ArrowLeft",
+                "ArrowRight",
+                "Tab",
+              ].includes(e.key)
+            ) {
+              e.preventDefault();
+            }
+          }
+        });
+      document
+        .getElementById("division")
+        .addEventListener("keydown", function (e) {
+          if (e.key === "Backspace" || e.key === "Delete") {
+            let value = e.target.value;
+            if (value.length > 0) {
+              let cleanValue = value.replace(/[^0-9A-Za-z]/g, "");
+              if (e.key === "Backspace") {
+                cleanValue = cleanValue.substring(0, cleanValue.length - 1);
+              }
+              let formattedValue = "";
+              if (cleanValue.length >= 1) {
+                formattedValue = cleanValue.charAt(0) + "°";
+                if (cleanValue.length >= 2) {
+                  let secondChar = cleanValue.charAt(1);
+                  if (/[A-Za-z]/.test(secondChar)) {
+                    secondChar = secondChar.toUpperCase();
+                  }
+                  formattedValue += secondChar + "°";
+                }
+              }
+              e.target.value = formattedValue;
+              e.preventDefault();
+            }
+          }
+        });
+    </script>
+  </body>
+</html>
