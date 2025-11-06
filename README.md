@@ -184,19 +184,6 @@ Abre tu navegador en `http://localhost:8000` (o el puerto que use tu servidor)
 - [x] Sistema de calendario
 - [x] Sección institucional
 
-### Próximas funcionalidades
-
-- [ ] Sistema de autenticación para administradores
-- [ ] Dashboard de resultados en tiempo real
-- [ ] Integración con base de datos
-- [ ] API REST para consultas
-- [ ] Módulo de votación electrónica
-- [ ] Sistema de notificaciones por email
-- [ ] Panel de administración
-- [ ] Modo oscuro
-- [ ] Accesibilidad mejorada (WCAG 2.1)
-- [ ] Versión PWA (Progressive Web App)
-
 ---
 
 ## 🤝 Contribuciones
